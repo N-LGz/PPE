@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.nemge.ppe">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.nemge.ppe">
 
     <application
             android:allowBackup="true"
@@ -17,8 +18,33 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"
-                  android:label="Home">
+        <activity
+                android:name=".HomeActivity"
+                android:label="Home"
+                android:parentActivityName=".HomeActivity">
+        </activity>
+        <activity
+                android:name=".ProfileActivity"
+                android:label="Profile">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.HomeActivity"
+                    android:value=".HomeActivity"/>
+        </activity>
+        <activity
+                android:name=".SettingsActivity"
+                android:label="Settings">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.HomeActivity"
+                    android:value=".HomeActivity"/>
+        </activity>
+        <activity android:name=".TutorialActivity"
+                  android:label="Tutorial">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.HomeActivity"
+                    android:value=".HomeActivity"/>
         </activity>
     </application>
 

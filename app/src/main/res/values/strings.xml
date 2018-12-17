@@ -13,7 +13,7 @@
     <!--Home PagerAdapter-->
     <string name="home_doses">Doses</string>
     <string name="home_graphics">Consumption</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--MEnu Settings-->
+    <string name="menu_settings_languages">Languages</string>
+    <string name="menu_settings_notifications">Notifications</string>
 </resources>

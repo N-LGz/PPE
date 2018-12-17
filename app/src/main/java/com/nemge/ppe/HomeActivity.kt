@@ -25,7 +25,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val actionbar: ActionBar? = supportActionBar
         actionbar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
+            setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
         }
         mDrawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
@@ -67,11 +67,23 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
         when (id) {
             R.id.nav_profile -> {
-
+                val intentProfile = Intent(this, ProfileActivity::class.java)
+                startActivity(intentProfile)
+                return true
+            }
+            R.id.nav_tutorial -> {
+                val intentTutorial = Intent(this, TutorialActivity::class.java)
+                startActivity(intentTutorial)
                 return true
             }
             R.id.nav_settings -> {
-
+                val intentSettings = Intent(this, SettingsActivity::class.java)
+                startActivity(intentSettings)
+                return true
+            }
+            R.id.nav_disconnect -> {
+                val intentDisconnect = Intent(this, LoginActivity::class.java)
+                startActivity(intentDisconnect)
                 return true
             }
             else -> {
