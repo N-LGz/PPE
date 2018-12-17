@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PPE</string>
+    <!--Login-->
+    <string name="title_login">PPE</string>
+    <string name="email_login">E-mail</string>
+    <string name="password_login">Password</string>
+    <string name="button_login">Sign In</string>
+    <!--Home Navigation Drawer-->
+    <string name="nav_profile">Profile</string>
+    <string name="nav_tutorial">Tutorial</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_logout">Log Out</string>
+    <!--Home PagerAdapter-->
+    <string name="home_doses">Doses</string>
+    <string name="home_graphics">Consumption</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
