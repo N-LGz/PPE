@@ -16,7 +16,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
-    //test
+    //test2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
