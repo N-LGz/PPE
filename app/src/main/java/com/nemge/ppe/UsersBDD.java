@@ -57,7 +57,7 @@ public class UsersBDD {
     }
 
     public Users getUserWithName(String name){
-        Cursor c = bdd.query(USERS_TABLE, new String[] {COL_ID, COL_NAME, COL_PASSWORD}, COL_NAME + " LIKE \"" + name +"\"", null, null, null, null);
+        Cursor c = bdd.query(USERS_TABLE, new String[] {COL_ID, COL_NAME, COL_PASSWORD}, COL_NAME + " LIKE \"" + name +"\"", null, null, null, null); //LIGNE QUI BUG
         return cursorToUser(c);
     }
 

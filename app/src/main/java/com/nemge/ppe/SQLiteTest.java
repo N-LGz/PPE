@@ -18,19 +18,18 @@ public class SQLiteTest extends AppCompatActivity {
         userBdd.open();
         userBdd.insertUser(user);
 
-        // SOURCE DU BUG
-        /**Users UserfromBdd = userBdd.getUserWithName(user.getName());
+        Users UserfromBdd = userBdd.getUserWithName(user.getName());
 
         if(UserfromBdd != null){
             Toast.makeText(this, UserfromBdd.toString(), Toast.LENGTH_LONG).show();
         }
 
         if(UserfromBdd == null){
-            Toast.makeText(this, "CeT utilisateur n'existe pas", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Cet utilisateur n'existe pas", Toast.LENGTH_LONG).show();
         }
         else{
-            Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-        }**/
+            Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
+        }
         userBdd.close();
     }
 }
