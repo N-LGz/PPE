@@ -39,12 +39,17 @@
                     android:parentActivityName="com.nemge.ppe.HomeActivity"
                     android:value=".HomeActivity"/>
         </activity>
-        <activity android:name=".TutorialActivity"
-                  android:label="Tutorial">
+        <activity
+                android:name=".TutorialActivity"
+                android:label="Tutorial">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.HomeActivity"
                     android:value=".HomeActivity"/>
+        </activity>
+        <activity android:name=".SQLiteActivity">
+        </activity>
+        <activity android:name=".SQLiteTest">
         </activity>
     </application>
 
