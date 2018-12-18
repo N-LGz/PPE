@@ -18,7 +18,8 @@ public class SQLiteTest extends AppCompatActivity {
         userBdd.open();
         userBdd.insertUser(user);
 
-        Users UserfromBdd = userBdd.getUserWithName(user.getName());
+        // SOURCE DU BUG
+        /**Users UserfromBdd = userBdd.getUserWithName(user.getName());
 
         if(UserfromBdd != null){
             Toast.makeText(this, UserfromBdd.toString(), Toast.LENGTH_LONG).show();
@@ -29,7 +30,7 @@ public class SQLiteTest extends AppCompatActivity {
         }
         else{
             Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-        }
+        }**/
         userBdd.close();
     }
 }
