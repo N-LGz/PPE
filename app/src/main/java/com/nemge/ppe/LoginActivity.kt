@@ -12,7 +12,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
     }
     fun connect(view: View) {
-        val intentHome = Intent(this, HomeActivity::class.java)
+        val intentHome = Intent(this, SQLiteTest::class.java)
         startActivity(intentHome)
     }
 }
