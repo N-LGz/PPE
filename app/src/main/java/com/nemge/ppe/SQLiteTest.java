@@ -32,7 +32,6 @@ public class SQLiteTest extends AppCompatActivity {
             //on affiche un message indiquant que le livre existe dans la BDD
             Toast.makeText(this, "Ce livre existe dans la BDD", Toast.LENGTH_LONG).show();
         }
-
         userBdd.close();
     }
 }
