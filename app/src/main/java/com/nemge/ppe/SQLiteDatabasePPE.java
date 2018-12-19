@@ -7,8 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQLiteDatabasePPE extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "Users.db";
-    public static final String TABLE_NAME = "users_table";
+    public static final String DATABASE_NAME = "PPE.db";
+
+    public static final String TABLE_USERS = "users_table";
     public static final String COL_ID = "id";
     public static final String COL_NAME = "name";
     public static final String COL_PASSWORD = "password";
@@ -19,12 +20,12 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(android.database.sqlite.SQLiteDatabase db) {
-        db.execSQL("CREATE table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, PASSWORD TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_USERS + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, PASSWORD TEXT) ");
     }
 
     @Override
     public void onUpgrade(android.database.sqlite.SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
 
@@ -33,7 +34,7 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_NAME, name);
         contentValues.put(COL_PASSWORD, password);
-        long result = db.insert(TABLE_NAME, null, contentValues);
+        long result = db.insert(TABLE_USERS, null, contentValues);
         if(result==-1){
             return false;
         }
@@ -42,9 +43,16 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getData(){
+    public void deleteAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        db.execSQL("DROP TABLE " + TABLE_USERS);
+        db.execSQL("CREATE TABLE " + TABLE_USERS + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, PASSWORD TEXT) ");
+        db.close();
+    }
+
+    public Cursor getAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_USERS, null);
         return result;
     }
 }

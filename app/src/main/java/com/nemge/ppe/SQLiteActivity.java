@@ -12,7 +12,7 @@ import android.widget.Toast;
 public class SQLiteActivity extends AppCompatActivity {
     SQLiteDatabasePPE db;
     EditText nameInput, passwordInput;
-    Button button_add, button_show;
+    Button button_add, button_show, button_clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,8 @@ public class SQLiteActivity extends AppCompatActivity {
         AddData();
         button_show = findViewById(R.id.Show_Button);
         ViewData();
+        button_clear = findViewById(R.id.Clear_Button);
+        clearAllData();
     }
 
     public void AddData(){
@@ -48,20 +50,28 @@ public class SQLiteActivity extends AppCompatActivity {
         button_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor data = db.getData();
+                Cursor data = db.getAllData();
                 if(data.getCount()==0){
-
                     return;
                 }
                 else{
                     StringBuffer buffer = new StringBuffer();
                     while(data.moveToNext()){
-                        buffer.append("ID :" + data.getString(0)+ "\n ");
-                        buffer.append("NAME :" + data.getString(1)+ "\n ");
-                        buffer.append("PASSWORD :" + data.getString(2)+ "\n ");
+                        buffer.append("ID : " + data.getString(0)+ "\n ");
+                        buffer.append("NAME : " + data.getString(1)+ "\n ");
+                        buffer.append("PASSWORD : " + data.getString(2)+ "\n ");
                     }
                     showMessage("Data", buffer.toString());
                 }
+            }
+        });
+    }
+
+    public void clearAllData(){
+        button_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deleteAllData();
             }
         });
     }

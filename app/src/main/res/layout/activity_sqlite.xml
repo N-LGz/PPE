@@ -65,5 +65,14 @@
             android:clickable="true"
             android:text="Show Data">
         </Button>
+
+        <Button
+                android:id="@+id/Clear_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:text="Clear Data">
+        </Button>
     </LinearLayout>
 </RelativeLayout>
