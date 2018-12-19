@@ -1,13 +1,13 @@
 //pour remplir la table des heures initialement
-INSERT INTO Dose_heure VALUES (1, '10:00:00', 4)
-INSERT INTO Dose_heure VALUES (1, '11:00:00', 5)
-INSERT INTO Dose_heure VALUES (1, '12:00:00', 6)
-INSERT INTO Dose_heure VALUES (2, '10:00:00', 6)
-INSERT INTO Dose_heure VALUES (2, '11:00:00', 6)
-INSERT INTO Dose_heure VALUES (2, '12:00:00', 6)
-INSERT INTO Dose_heure VALUES (3, '10:00:00', 2)
-INSERT INTO Dose_heure VALUES (3, '11:00:00', 7)
-INSERT INTO Dose_heure VALUES (3, '12:00:00', 12)
+    INSERT INTO Dose_heure VALUES (1, '10:00:00', '2018-12-01')
+INSERT INTO Dose_heure VALUES (1, '11:00:00', '2018-12-01')
+INSERT INTO Dose_heure VALUES (1, '12:00:00', '2018-12-02')
+INSERT INTO Dose_heure VALUES (2, '10:00:00', '2018-12-02')
+INSERT INTO Dose_heure VALUES (2, '11:00:00', '2018-12-03')
+INSERT INTO Dose_heure VALUES (2, '12:00:00', '2018-12-03')
+INSERT INTO Dose_heure VALUES (3, '10:00:00', '2018-12-04')
+INSERT INTO Dose_heure VALUES (3, '11:00:00', '2018-12-04')
+INSERT INTO Dose_heure VALUES (3, '12:00:00', '2018-12-05')
 
 //pour remplir la table des jours initialement
 INSERT INTO Dose_jour VALUES (1, '2018-12-01', 10)
