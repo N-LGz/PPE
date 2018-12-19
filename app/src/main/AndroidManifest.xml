@@ -49,8 +49,6 @@
         </activity>
         <activity android:name=".SQLiteActivity">
         </activity>
-        <activity android:name=".SQLiteTest">
-        </activity>
     </application>
 
 </manifest>

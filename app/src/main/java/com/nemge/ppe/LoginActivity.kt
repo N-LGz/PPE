@@ -11,8 +11,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
     }
+
     fun connect(view: View) {
-        val intentHome = Intent(this, SQLiteTest::class.java)
+        val intentHome = Intent(this, SQLiteActivity::class.java)
         startActivity(intentHome)
     }
 }
