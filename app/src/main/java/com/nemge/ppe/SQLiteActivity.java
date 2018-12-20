@@ -35,7 +35,7 @@ public class SQLiteActivity extends AppCompatActivity {
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isInserted = db. insertData(nameInput.getText().toString(), passwordInput.getText().toString());
+                boolean isInserted = db.insertData(nameInput.getText().toString(), passwordInput.getText().toString());
                 if(isInserted){
                     Toast.makeText(SQLiteActivity.this, "Data is inserted sucessfully", Toast.LENGTH_LONG).show();
                 }

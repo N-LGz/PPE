@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBar
-import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_home.*
 

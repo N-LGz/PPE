@@ -8,11 +8,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQLiteDatabasePPE extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "PPE.db";
-
+    //USERS TABLE
     public static final String TABLE_USERS = "users_table";
     public static final String COL_ID = "id";
     public static final String COL_NAME = "name";
     public static final String COL_PASSWORD = "password";
+
+    //DOSES TABLE
+    public static final String TABLE_DOSES = "doses_table";
+    public static final String COL_ID_USER = "id_user";
+    public static final String COL_HOURS = "hours";
+    public static final String COL_DATE = "date";
 
     public SQLiteDatabasePPE(Context context){
         super(context, DATABASE_NAME, null, 1);
@@ -21,11 +27,13 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
     @Override
     public void onCreate(android.database.sqlite.SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_USERS + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, PASSWORD TEXT) ");
+        db.execSQL("CREATE TABLE " + TABLE_DOSES + " (ID_USER INTEGER NOT NULL CONSTRAINT COL_ID_USERS REFERENCES TABLE_USERS(COL_ID), HOURS DATETIME, DATE DATETIME) ");
     }
 
     @Override
     public void onUpgrade(android.database.sqlite.SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOSES);
         onCreate(db);
     }
 
