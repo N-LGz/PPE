@@ -42,13 +42,13 @@
                 android:layout_marginTop="50dp"
                 android:text="Name"
                 android:ems="10"
-                android:id="@+id/editText3"/>
+                android:id="@+id/enter_name1"/>
         <Button
                 android:text="@string/delete_an_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:id="@+id/button3"/>
+                android:id="@+id/button_del_user"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:inputType="textPersonName"
                 android:text="Name"
                 android:ems="10"
-                android:id="@+id/editText4"/>
+                android:id="@+id/enter_name2"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,13 +65,12 @@
                 android:inputType="textPersonName"
                 android:text="Password"
                 android:ems="10"
-                android:id="@+id/editText5"/>
+                android:id="@+id/enter_password1"/>
         <Button
                 android:text="@string/add_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:id="@+id/button4"/>
-
+                android:id="@+id/button_add_user"/>
     </LinearLayout>
 </RelativeLayout>
