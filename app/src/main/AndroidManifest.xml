@@ -12,11 +12,7 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".HomeActivity"
@@ -49,12 +45,20 @@
         </activity>
         <activity android:name=".SQLiteActivity">
         </activity>
-        <activity android:name=".AdminActivity"
-                  android:label="Admin">
+        <activity
+                android:name=".AdminActivity"
+                android:label="Admin">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.SettingsActivity"
                     android:value=".SettingsActivity"/>
+        </activity>
+        <activity android:name=".GraphTestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

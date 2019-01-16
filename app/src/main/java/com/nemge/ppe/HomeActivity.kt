@@ -91,6 +91,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         this.mDrawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    
 }
 
 

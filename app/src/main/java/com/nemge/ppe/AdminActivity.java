@@ -36,7 +36,7 @@ public class AdminActivity extends AppCompatActivity {
         button_view_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor data = db.getAllData();
+                Cursor data = db.getAllUsers();
                 if(data.getCount()==0){
                     return;
                 }
