@@ -45,6 +45,34 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
         insertNewUsers("Geoffrey", "1234");
         insertNewUsers("Aurelio", "eternite");
         insertNewUsers("admin", "admin" );
+
+        insertNewDose("20190116 10:30:00");
+        insertNewDose("20190116 10:31:00");
+        insertNewDose("20190116 10:32:00");
+        insertNewDose("20190116 11:30:00");
+        insertNewDose("20190116 12:30:00");
+        insertNewDose("20190116 15:30:00");
+        insertNewDose("20190116 15:31:00");
+        insertNewDose("20190116 18:30:00");//8 for day 1
+        insertNewDose("20190117 10:30:00");
+        insertNewDose("20190117 11:30:00");
+        insertNewDose("20190117 12:30:00");
+        insertNewDose("20190117 12:31:00");
+        insertNewDose("20190117 13:30:00");
+        insertNewDose("20190117 14:30:00");//6 for day 2
+        insertNewDose("20190118 10:30:00");
+        insertNewDose("20190118 11:30:00");
+        insertNewDose("20190118 12:30:00");
+        insertNewDose("20190118 12:31:00");
+        insertNewDose("20190118 13:30:00");
+        insertNewDose("20190118 14:30:00");//6 for day 3
+        insertNewDose("20190119 10:30:00");
+        insertNewDose("20190119 11:30:00");
+        insertNewDose("20190119 12:30:00");//3 for day 4
+
+        //SQL pour chopper les données de cette semaine
+        //SELECT COUNT(*) FROM TABLE_USERS WHERE COL_DATE >= "20190117 00:00:00" AND COL_DATE < "20190117 23:59:59"
+
     }
 
     public boolean insertNewUsers(String name, String password){
@@ -80,7 +108,7 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean insertNewDose(){
+    public boolean insertNewDoseNow(){
         android.database.sqlite.SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -90,6 +118,20 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
         String formattedDate=dateFormat.format(date);
 
         contentValues.put(COL_DATE, formattedDate);
+        long result = db.insert(TABLE_USERS, null, contentValues);
+        if(result==-1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public boolean insertNewDose(String date){
+        android.database.sqlite.SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL_DATE, date);
         long result = db.insert(TABLE_USERS, null, contentValues);
         if(result==-1){
             return false;
