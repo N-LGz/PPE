@@ -16,4 +16,11 @@
     <!--Menu Settings-->
     <string name="menu_settings_languages">Languages</string>
     <string name="menu_settings_notifications">Notifications</string>
+    <string name="menu_settings_admin">Admin</string>
+    <!--Admin-->
+    <string name="view_users">VIEW ALL DATA</string>
+    <string name="search_an_user">SEARCH AN USER</string>
+    <string name="delete_an_user">DELETE AN USER</string>
+    <string name="clear_data">CLEAR ALL DATA</string>
+    <string name="add_user">ADD AN USER</string>
 </resources>
