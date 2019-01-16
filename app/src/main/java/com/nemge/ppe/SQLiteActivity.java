@@ -35,7 +35,7 @@ public class SQLiteActivity extends AppCompatActivity {
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isInserted = db.insertData(nameInput.getText().toString(), passwordInput.getText().toString());
+                boolean isInserted = db.insertNewUsers(nameInput.getText().toString(), passwordInput.getText().toString());
                 if(isInserted){
                     Toast.makeText(SQLiteActivity.this, "Data is inserted sucessfully", Toast.LENGTH_LONG).show();
                 }
@@ -50,7 +50,7 @@ public class SQLiteActivity extends AppCompatActivity {
         button_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor data = db.getAllData();
+                Cursor data = db.getAllUsers();
                 if(data.getCount()==0){
                     return;
                 }
@@ -71,7 +71,7 @@ public class SQLiteActivity extends AppCompatActivity {
         button_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteAllData();
+                db.deleteAllUsers();
             }
         });
     }

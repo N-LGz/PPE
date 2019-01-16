@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class SQLiteDatabasePPE extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "PPE.db";
     //USERS TABLE
@@ -33,9 +38,16 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOSES);
         onCreate(db);
+        autofillBDD();
     }
 
-    public boolean insertData(String name, String password){
+    public void autofillBDD(){
+        insertNewUsers("Geoffrey", "1234");
+        insertNewUsers("Aurelio", "eternite");
+        insertNewUsers("admin", "admin" );
+    }
+
+    public boolean insertNewUsers(String name, String password){
         android.database.sqlite.SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_NAME, name);
@@ -49,16 +61,49 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
         }
     }
 
-    public void deleteAllData(){
+    public void deleteAllUsers(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE " + TABLE_USERS);
         db.execSQL("CREATE TABLE " + TABLE_USERS + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, PASSWORD TEXT) ");
         db.close();
     }
 
-    public Cursor getAllData(){
+    public Cursor getAllUsers(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("SELECT * FROM " + TABLE_USERS, null);
         return result;
     }
+
+    public Cursor getUser(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE COL_NAME = " + name, null);
+        return result;
+    }
+
+    public boolean insertNewDose(){
+        android.database.sqlite.SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        Calendar cal = Calendar.getInstance();
+        Date date=cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate=dateFormat.format(date);
+
+        contentValues.put(COL_DATE, formattedDate);
+        long result = db.insert(TABLE_USERS, null, contentValues);
+        if(result==-1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public void deleteAllDoses(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE " + TABLE_DOSES);
+        db.execSQL("CREATE TABLE " + TABLE_DOSES + " (DATE_HOURS DATETIME) ");
+        db.close();
+    }
+
 }

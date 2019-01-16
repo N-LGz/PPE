@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         button_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor data = db.getAllData();
+                Cursor data = db.getAllUsers();
                 if(data.getCount()==0){
                     return;
                 }
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isInserted = db.insertData(name_log.getText().toString(), password_log.getText().toString());
+                boolean isInserted = db.insertNewUsers(name_log.getText().toString(), password_log.getText().toString());
                 if(isInserted){
                     Toast.makeText(LoginActivity.this, "Data is inserted sucessfully", Toast.LENGTH_LONG).show();
                 }
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         button_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor data = db.getAllData();
+                Cursor data = db.getAllUsers();
                 String name_user;
                 String password_user;
                 data.moveToFirst();
