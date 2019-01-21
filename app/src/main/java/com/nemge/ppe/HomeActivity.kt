@@ -3,17 +3,25 @@ package com.nemge.ppe
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
-import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBar
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    private lateinit var navigation: BottomNavigationView
+    private val onNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_doses -> return@OnNavigationItemSelectedListener true
+                R.id.menu_charts -> return@OnNavigationItemSelectedListener true
+            }
+            false
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,31 +33,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
         }
+
         mDrawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
-
-        tab_layout.addTab(tab_layout.newTab().setText(R.string.home_doses))
-        tab_layout.addTab(tab_layout.newTab().setText(R.string.home_graphics))
-        tab_layout.tabGravity = TabLayout.GRAVITY_FILL
-
-        val adapter = PagerAdapter(supportFragmentManager, tab_layout.tabCount)
-        pager.adapter = adapter
-        pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
-        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                pager.currentItem = tab.position
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
-        })
+        navigation = findViewById(R.id.navigation)
+        navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -65,16 +54,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when (id) {
-            R.id.nav_profile -> {
-                val intentProfile = Intent(this, ProfileActivity::class.java)
-                startActivity(intentProfile)
-                return true
-            }
-            R.id.nav_tutorial -> {
-                val intentTutorial = Intent(this, TutorialActivity::class.java)
-                startActivity(intentTutorial)
-                return true
-            }
+
             R.id.nav_settings -> {
                 val intentSettings = Intent(this, SettingsActivity::class.java)
                 startActivity(intentSettings)

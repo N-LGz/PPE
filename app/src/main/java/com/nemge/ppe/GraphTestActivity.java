@@ -18,7 +18,7 @@ public class GraphTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_test);
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+        GraphView graph = findViewById(R.id.graph);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, -1),
                 new DataPoint(1, 5),
@@ -28,7 +28,7 @@ public class GraphTestActivity extends AppCompatActivity {
         });
         graph.addSeries(series);
 
-// styling
+        // styling
         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
             @Override
             public int get(DataPoint data) {
@@ -38,7 +38,7 @@ public class GraphTestActivity extends AppCompatActivity {
 
         series.setSpacing(50);
 
-// draw values on top
+        // draw values on top
         series.setDrawValuesOnTop(true);
         series.setValuesOnTopColor(Color.RED);
     }

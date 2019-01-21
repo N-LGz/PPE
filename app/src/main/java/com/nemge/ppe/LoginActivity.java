@@ -14,8 +14,6 @@ public class LoginActivity extends AppCompatActivity {
     SQLiteDatabasePPE db;
     EditText name_log, password_log;
     Button button_log;
-    Button button_insert;
-    Button button_show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,56 +26,6 @@ public class LoginActivity extends AppCompatActivity {
         password_log = findViewById(R.id.password_login);
         button_log = findViewById(R.id.button_login);
         Login();
-
-        button_insert = findViewById(R.id.button_insert);
-        AddData();
-
-        button_show = findViewById(R.id.button_show);
-        ViewData();
-    }
-
-    public void ViewData(){
-        button_show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor data = db.getAllUsers();
-                if(data.getCount()==0){
-                    return;
-                }
-                else{
-                    StringBuffer buffer = new StringBuffer();
-                    while(data.moveToNext()){
-                        buffer.append("ID : " + data.getString(0)+ "\n ");
-                        buffer.append("NAME : " + data.getString(1)+ "\n ");
-                        buffer.append("PASSWORD : " + data.getString(2)+ "\n ");
-                    }
-                    showMessage("Data", buffer.toString());
-                }
-            }
-        });
-    }
-
-    public void AddData(){
-        button_insert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isInserted = db.insertNewUsers(name_log.getText().toString(), password_log.getText().toString());
-                if(isInserted){
-                    Toast.makeText(LoginActivity.this, "Data is inserted sucessfully", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(LoginActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    public void showMessage(String title, String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
     }
 
     public void Login() {

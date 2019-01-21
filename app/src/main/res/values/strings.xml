@@ -13,6 +13,9 @@
     <!--Home PagerAdapter-->
     <string name="home_doses">Doses</string>
     <string name="home_graphics">Consumption</string>
+    <!--Main Menu-->
+    <string name="home_count">Doses</string>
+    <string name="home_charts">Charts</string>
     <!--Menu Settings-->
     <string name="menu_settings_languages">Languages</string>
     <string name="menu_settings_notifications">Notifications</string>
@@ -23,4 +26,8 @@
     <string name="delete_an_user">DELETE AN USER</string>
     <string name="clear_data">CLEAR ALL DATA</string>
     <string name="add_user">ADD AN USER</string>
+    <string name="enter_name">Name</string>
+    <string name="enter_password">Password</string>
+
+
 </resources>

@@ -14,8 +14,7 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/colorAccent">
+                android:orientation="vertical">
             <TextView
                     android:text="@string/title_login"
                     android:gravity="center"
@@ -57,22 +56,4 @@
         android:id="@+id/button_login"
         android:clickable="true"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
-    <Button
-            android:text="Insert Data"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:id="@+id/button_insert"
-            android:clickable="true"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
-    <Button
-            android:text="Show Data"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:id="@+id/button_show"
-            android:clickable="true"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
 </LinearLayout>

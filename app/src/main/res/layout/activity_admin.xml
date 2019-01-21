@@ -23,14 +23,16 @@
         <Button
                 android:text="@string/view_users"
                 android:layout_marginTop="50dp"
-                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:id="@+id/button_view_data"/>
         <Button
                 android:layout_marginTop="50dp"
+                android:layout_gravity="center"
                 android:text="@string/clear_data"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:id="@+id/button_clear_data"/>
@@ -40,12 +42,14 @@
                 android:inputType="textPersonName"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                android:text="Name"
                 android:ems="10"
-                android:id="@+id/enter_name1"/>
+                android:id="@+id/enter_name1"
+                android:hint="@string/enter_name"
+                android:textAlignment="center"/>
         <Button
                 android:text="@string/delete_an_user"
-                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:id="@+id/button_del_user"/>
@@ -55,20 +59,23 @@
                 android:layout_marginTop="50dp"
                 android:layout_gravity="center"
                 android:inputType="textPersonName"
-                android:text="Name"
                 android:ems="10"
-                android:id="@+id/enter_name2"/>
+                android:id="@+id/enter_name2"
+                android:hint="@string/enter_name"
+                android:textAlignment="center"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:inputType="textPersonName"
-                android:text="Password"
                 android:ems="10"
-                android:id="@+id/enter_password1"/>
+                android:id="@+id/enter_password1"
+                android:hint="@string/enter_password"
+                android:textAlignment="center"/>
         <Button
                 android:text="@string/add_user"
-                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:id="@+id/button_add_user"/>
