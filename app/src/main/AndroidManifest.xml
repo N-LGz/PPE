@@ -11,44 +11,29 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+        <activity android:name=".LoginActivity">
+
         </activity>
+
         <activity
                 android:name=".HomeActivity"
                 android:label="Home"
                 android:parentActivityName=".HomeActivity">
         </activity>
-        <activity
-                android:name=".ProfileActivity"
-                android:label="Profile">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.HomeActivity"
-                    android:value=".HomeActivity"/>
-        </activity>
+
         <activity
                 android:name=".SettingsActivity"
                 android:label="Settings">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.HomeActivity"
-                    android:value=".HomeActivity"/>
+                    android:parentActivityName="com.nemge.ppe.MainActivity"
+                    android:value=".MainActivity"/>
         </activity>
-        <activity
-                android:name=".TutorialActivity"
-                android:label="Tutorial">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.HomeActivity"
-                    android:value=".HomeActivity"/>
-        </activity>
+
         <activity android:name=".SQLiteActivity">
         </activity>
+
         <activity
                 android:name=".AdminActivity"
                 android:label="Admin">
@@ -57,7 +42,18 @@
                     android:parentActivityName="com.nemge.ppe.SettingsActivity"
                     android:value=".SettingsActivity"/>
         </activity>
+
         <activity android:name=".GraphTestActivity">
+        </activity>
+
+        <activity android:name=".MainActivity"
+                  android:label="Home"
+                  android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

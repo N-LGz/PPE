@@ -2,10 +2,8 @@ package com.nemge.ppe;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,26 +27,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void Login() {
-        button_log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor data = db.getAllUsers();
-                String name_user;
-                String password_user;
-                data.moveToFirst();
-                do {
-                    name_user = data.getString(1);
-                    password_user = data.getString(2);
-                    if (name_log.getText().toString().equals(name_user) && password_log.getText().toString().equals(password_user)) {
-                        Intent home = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(home);
-                        Toast.makeText(LoginActivity.this, "Welcome, " + name_log.getText().toString() + "!", Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed", Toast.LENGTH_LONG).show();
-                    }
-                }while(data.moveToNext());
-            }
+        button_log.setOnClickListener(v -> {
+            Cursor data = db.getAllUsers();
+            String name_user;
+            String password_user;
+            data.moveToFirst();
+            do {
+                name_user = data.getString(1);
+                password_user = data.getString(2);
+                if (name_log.getText().toString().equals(name_user) && password_log.getText().toString().equals(password_user)) {
+                    Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(main);
+                    Toast.makeText(LoginActivity.this, "Welcome, " + name_log.getText().toString() + "!", Toast.LENGTH_LONG).show();
+                }
+            }while(data.moveToNext());
         });
     }
 }

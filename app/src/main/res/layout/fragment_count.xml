@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".CountFragment">
-</FrameLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                tools:context=".CountFragment">
+    <TextView
+            android:id="@+id/title_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+    <ProgressBar android:id="@+id/progressBar1"
+                 style="?android:attr/progressBarStyleHorizontal"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:indeterminate="false"
+                 android:max="10"
+                 android:layout_below="@+id/title_count"
+                 android:padding="4dip">
+    </ProgressBar>
+    <Button android:text="Use a dose"
+            android:id="@+id/button_count"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progressBar1" style="@style/Widget.AppCompat.Button.Colored"/>
+</RelativeLayout>
