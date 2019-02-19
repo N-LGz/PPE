@@ -5,8 +5,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -80,11 +78,6 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     public void clearAllData(){
-        button_clear_all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.deleteAllUsers();
-            }
-        });
+        button_clear_all.setOnClickListener(v -> db.deleteAllUsers());
     }
 }

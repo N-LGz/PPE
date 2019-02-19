@@ -14,6 +14,7 @@ public class CountFragment extends Fragment {
     private ProgressBar progress;
     private Button button;
     int value = 0;
+    int result = 200;
 
     public CountFragment() {
 
@@ -31,19 +32,20 @@ public class CountFragment extends Fragment {
 
         show = view.findViewById(R.id.title_count);
         progress = view.findViewById(R.id.progressBar1);
+        progress.setProgress(result);
         button = view.findViewById(R.id.button_count);
         discount();
         return view;
     }
 
     public void discount() {
-        show.setText(value + "");
+        show.setText(result + "");
         button.setOnClickListener(v -> {
-            progress.setProgress(value);
-            if(value<=10){
-                show.setText(value + "");
+            result--;
+            progress.setProgress(result);
+            if(result>=0){
+                show.setText(result + "");
             }
-            value++;
         });
     }
 }
