@@ -11,7 +11,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
     SQLiteDatabasePPE db;
     EditText name_log, password_log;
-    Button button_log;
+    Button button_log, button_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,9 @@ public class LoginActivity extends AppCompatActivity {
         password_log = findViewById(R.id.password_login);
         button_log = findViewById(R.id.button_login);
         Login();
+
+        button_register = findViewById(R.id.button_sign);
+        NewAccount();
     }
 
     public void Login() {
@@ -41,6 +44,13 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Welcome, " + name_log.getText().toString() + "!", Toast.LENGTH_LONG).show();
                 }
             }while(data.moveToNext());
+        });
+    }
+
+    public void NewAccount(){
+        button_register.setOnClickListener(v ->{
+            Intent signup = new Intent(this, SignActivity.class);
+            startActivity(signup);
         });
     }
 }

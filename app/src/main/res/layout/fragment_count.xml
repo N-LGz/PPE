@@ -43,9 +43,10 @@
                     android:padding="4dip"
                     style="@android:style/Widget.ProgressBar.Horizontal"/>
             <Button android:text="Use a dose"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:id="@+id/button_count"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.Button.Colored"/>
         </RelativeLayout>

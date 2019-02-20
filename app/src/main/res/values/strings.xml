@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PPE</string>
     <!--Login-->
-    <string name="title_login">PPE</string>
+    <string name="title_login">Bron\'Connect</string>
     <string name="name_login">Name</string>
     <string name="password_login">Password</string>
     <string name="button_login">Sign In</string>
