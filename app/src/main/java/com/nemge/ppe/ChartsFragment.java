@@ -22,9 +22,6 @@ public class ChartsFragment extends Fragment {
 
     private onFragmentInteractionListener mListener;
 
-    Calendar current = Calendar.getInstance();
-    Date date;
-
     public ChartsFragment() {
 
     }

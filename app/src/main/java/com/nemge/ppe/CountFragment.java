@@ -1,5 +1,6 @@
 package com.nemge.ppe;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,14 +11,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class CountFragment extends Fragment {
-    private TextView show;
-    private ProgressBar progress;
-    private Button button;
-    int value = 0;
-    int result = 200;
+
+    private onFragmentInteractionListener mListener2;
 
     public CountFragment() {
 
+    }
+
+    public interface onFragmentInteractionListener {
+        void sendID2();
     }
 
     @Override
@@ -25,27 +27,35 @@ public class CountFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity) {
+            mListener2 = (onFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_count, container, false);
 
-        show = view.findViewById(R.id.title_count);
-        progress = view.findViewById(R.id.progressBar1);
-        progress.setProgress(result);
-        button = view.findViewById(R.id.button_count);
-        discount();
+
+
         return view;
     }
 
-    public void discount() {
-        show.setText(result + "");
-        button.setOnClickListener(v -> {
-            result--;
-            progress.setProgress(result);
-            if(result>=0){
-                show.setText(result + "");
-            }
-        });
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mListener2.sendID2();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener2 = null;
     }
 }
