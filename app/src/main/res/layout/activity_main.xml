@@ -35,6 +35,14 @@
                 android:layout_alignParentBottom="true"
                 android:background="?android:attr/windowBackground"
                 app:menu="@menu/main_menu"/>
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:hint="Test"
+                android:onClick="Test"
+                android:id="@+id/bttn"/>
+
     </RelativeLayout>
     <android.support.design.widget.NavigationView
             android:id="@+id/navigation_view"
