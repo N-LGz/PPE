@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public String[] semaines = new String[]{"Semaine 1", "Semaine 2", "Semaine 3", "Semaine 4"};
     public String[] heures = new String[]{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","22","23"};
 
-    ///TEST
-    private Button bttn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         botView = findViewById(R.id.navigation);
         configureBottomView();
 
-        ///TEST
-        bttn = navView.findViewById(R.id.bttn);
     }
 
     @Override
@@ -128,6 +124,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_disconnect:
                 Intent intentLog = new Intent(this, LoginActivity.class);
                 startActivity(intentLog);
+                break;
+            case R.id.nav_test:
+                Intent intent = new Intent(this, TestActivity.class);
+                startActivity(intent);
                 break;
         }
         this.mDrawerLayout.closeDrawer(GravityCompat.START);

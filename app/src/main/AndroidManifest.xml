@@ -15,6 +15,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".TestActivity">
+        </activity>
         <activity android:name=".LoginActivity">
         </activity>
         <activity
@@ -49,8 +51,9 @@
         </activity>
         <activity android:name=".SignActivity">
         </activity>
-        <activity android:name=".BluetoothDevicesActivity"
-                  android:label="Devices">
+        <activity
+                android:name=".BluetoothDevicesActivity"
+                android:label="Devices">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.SettingsActivity"
