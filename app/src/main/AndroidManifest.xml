@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.nemge.ppe">
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
             android:allowBackup="true"
@@ -11,45 +18,49 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".TestActivity">
+        </activity>
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity
-                android:name=".HomeActivity"
-                android:label="Home"
-                android:parentActivityName=".HomeActivity">
-        </activity>
-        <activity
-                android:name=".ProfileActivity"
-                android:label="Profile">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.HomeActivity"
-                    android:value=".HomeActivity"/>
         </activity>
         <activity
                 android:name=".SettingsActivity"
                 android:label="Settings">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.HomeActivity"
-                    android:value=".HomeActivity"/>
-        </activity>
-        <activity
-                android:name=".TutorialActivity"
-                android:label="Tutorial">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.HomeActivity"
-                    android:value=".HomeActivity"/>
+                    android:parentActivityName="com.nemge.ppe.MainActivity"
+                    android:value=".MainActivity"/>
         </activity>
         <activity android:name=".SQLiteActivity">
         </activity>
-        <activity android:name=".SQLiteTest">
+        <activity
+                android:name=".AdminActivity"
+                android:label="Admin">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.SettingsActivity"
+                    android:value=".SettingsActivity"/>
+        </activity>
+        <activity android:name=".GraphTestActivity">
+        </activity>
+        <activity
+                android:name=".MainActivity"
+                android:label="Home"
+                android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".SignActivity">
+        </activity>
+        <activity
+                android:name=".BluetoothDevicesActivity"
+                android:label="Devices">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.SettingsActivity"
+                    android:value=".MainActivity"/>
         </activity>
     </application>
 

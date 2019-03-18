@@ -18,9 +18,19 @@
                 android:title="@string/nav_settings"
                 app:showAsAction="never"/>
         <item
+                android:id="@+id/nav_bluetooth"
+                android:icon="@drawable/ic_bluetooth_black_24dp"
+                android:title="@string/nav_bluetooth"
+                app:showAsAction="never"/>
+        <item
                 android:id="@+id/nav_disconnect"
                 android:icon="@drawable/ic_power_settings_new_black_24dp"
                 android:title="@string/nav_logout"
+                app:showAsAction="never"/>
+        <item
+                android:id="@+id/nav_test"
+                android:icon="@drawable/ic_create_black_24dp"
+                android:title="@string/nav_test"
                 app:showAsAction="never"/>
     </group>
 </menu>

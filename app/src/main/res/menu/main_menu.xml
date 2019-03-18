@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/menu_doses"
+            android:orderInCategory="100"
+            android:title="@string/home_count"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_battery_full_white_24dp"/>
+    <item
+            android:id="@+id/menu_charts"
+            android:orderInCategory="100"
+            android:title="@string/home_charts"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_show_chart_white_24dp"/>
+</menu>
