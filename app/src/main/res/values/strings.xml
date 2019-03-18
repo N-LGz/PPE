@@ -12,6 +12,7 @@
     <string name="nav_bluetooth">Bluetooth</string>
     <string name="nav_logout">Log Out</string>
     <string name="nav_test">Test</string>
+    <string name="nav_test_bdd">Test BDD</string>
     <!--Home PagerAdapter-->
     <string name="home_doses">Doses</string>
     <string name="home_graphics">Consumption</string>
