@@ -35,6 +35,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="?android:attr/windowBackground"
                 app:menu="@menu/main_menu"/>
+
     </RelativeLayout>
     <android.support.design.widget.NavigationView
             android:id="@+id/navigation_view"

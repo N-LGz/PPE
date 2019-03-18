@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         botView = findViewById(R.id.navigation);
         configureBottomView();
+
     }
 
     @Override
@@ -123,6 +124,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_disconnect:
                 Intent intentLog = new Intent(this, LoginActivity.class);
                 startActivity(intentLog);
+                break;
+            case R.id.nav_test:
+                Intent intent = new Intent(this, TestActivity.class);
+                startActivity(intent);
                 break;
         }
         this.mDrawerLayout.closeDrawer(GravityCompat.START);

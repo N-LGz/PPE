@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.nemge.ppe">
-
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -15,6 +18,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".TestActivity">
+        </activity>
         <activity android:name=".LoginActivity">
         </activity>
         <activity
@@ -49,8 +54,9 @@
         </activity>
         <activity android:name=".SignActivity">
         </activity>
-        <activity android:name=".BluetoothDevicesActivity"
-                  android:label="Devices">
+        <activity
+                android:name=".BluetoothDevicesActivity"
+                android:label="Devices">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.SettingsActivity"
