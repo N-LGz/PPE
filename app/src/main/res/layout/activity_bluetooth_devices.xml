@@ -2,87 +2,62 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        tools:context=".BluetoothDevicesActivity">
-    <android.support.v7.widget.Toolbar
-            android:id="@+id/home_toolbar"
-            android:layout_width="match_parent"
+        tools:context="com.nemge.ppe.BluetoothDevicesActivity">
+
+    <Button
+            android:text="ON/OFF"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:layout_alignParentRight="true"
+            android:id="@+id/btnONOFF"/>
+
+    <Button
+            android:text="Enable Discoverable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnDiscoverable_on_off"
+            android:onClick="btnEnableDisable_Discoverable"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnFindUnpairedDevices"
+            android:text="Discover"
+            android:onClick="btnDiscover"/>
+
     <ListView
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/btnStartConnection"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:id="@+id/lvNewDevices"
-            android:layout_below="@id/home_toolbar"/>
-    <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/lvNewDevices" android:id="@+id/BT_options">
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-            <Button
-                    android:id="@+id/enable_disc"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Enable Discoverable"
-                    android:layout_weight="1"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            android:id="@+id/lvNewDevices"/>
 
-            <Button
-                    android:id="@+id/Discover"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Discover"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    style="@style/Widget.AppCompat.Button.Borderless"/>
-        </TableRow>
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-            <Button
-                    android:id="@+id/start_connect"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Start Connection"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    style="@style/Widget.AppCompat.Button.Borderless"/>
-            <Button
-                    android:id="@+id/On_Off"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="On/Off"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    style="@style/Widget.AppCompat.Button.Borderless"/>
-        </TableRow>
-    </TableLayout>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_below="@id/BT_options"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/dataBT"/>
     <Button
-            android:text="Send"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/BT_options"
-            android:layout_alignParentStart="true"
-            android:id="@+id/send"/>
+            android:layout_below="@+id/btnFindUnpairedDevices"
+            android:id="@+id/btnStartConnection"
+            android:text="Start Connection"/>
 
+    <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter Text Here"
+            android:layout_below="@+id/lvNewDevices"
+            android:layout_alignParentStart="true"
+            android:id="@+id/editText"/>
+    <Button
+            android:text="Read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/editText"
+            android:layout_below="@+id/lvNewDevices"
+            android:id="@+id/read"/>
 </RelativeLayout>
