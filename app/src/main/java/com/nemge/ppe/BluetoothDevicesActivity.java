@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -153,22 +154,26 @@ public class BluetoothDevicesActivity extends AppCompatActivity implements Adapt
         unregisterReceiver(mBroadcastReceiver2);
         unregisterReceiver(mBroadcastReceiver3);
         unregisterReceiver(mBroadcastReceiver4);
-        //mBluetoothAdapter.cancelDiscovery();
+        mBluetoothAdapter.cancelDiscovery();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_devices);
-        Button btnONOFF = (Button) findViewById(R.id.btnONOFF);
-        btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);
-        lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
+        Button btnONOFF = findViewById(R.id.btnONOFF);
+        btnEnableDisable_Discoverable = findViewById(R.id.btnDiscoverable_on_off);
+        lvNewDevices = findViewById(R.id.lvNewDevices);
         mBTDevices = new ArrayList<>();
 
-        btnStartConnection = (Button) findViewById(R.id.btnStartConnection);
-        btnSend = (Button) findViewById(R.id.btnSend);
-        etSend = (EditText) findViewById(R.id.editText);
+        btnStartConnection = findViewById(R.id.btnStartConnection);
+        btnSend = findViewById(R.id.read);
+        etSend = findViewById(R.id.editText);
         btnRead = findViewById(R.id.read);
+
+        setSupportActionBar(findViewById(R.id.home_toolbar));
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
 
         //Broadcasts when bond state changes (ie:pairing)
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);

@@ -32,5 +32,10 @@
                 android:icon="@drawable/ic_create_black_24dp"
                 android:title="@string/nav_test"
                 app:showAsAction="never"/>
+        <item
+                android:id="@+id/nav_test_bdd"
+                android:icon="@drawable/ic_data_usage_black_24dp"
+                android:title="@string/nav_test_bdd"
+                app:showAsAction="never"/>
     </group>
 </menu>

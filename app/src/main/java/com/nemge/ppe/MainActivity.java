@@ -129,6 +129,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(this, TestActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_test_bdd:
+                Intent intentBDD = new Intent(this, TestBDD.class);
+                startActivity(intentBDD);
+                break;
         }
         this.mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
