@@ -21,9 +21,6 @@ public class User {
     @ColumnInfo(name = "name")
     private String name;
 
-    @ColumnInfo(name = "email")
-    private String email;
-
     /*
     @ColumnInfo(name = "dose")
     @TypeConverters({TimeStampConverter.class})
@@ -35,9 +32,8 @@ public class User {
     }
 
     @Ignore
-    public User(String name, String email){
+    public User(String name){
         this.name = name;
-        this.email = email;
     }
 
     public int getId() {
@@ -56,14 +52,6 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     /*
     public Date getDose() {
         return dose;
@@ -76,6 +64,6 @@ public class User {
 
     @Override
     public String toString(){
-        return new StringBuilder(name).append("\n").append(email).toString();
+        return new StringBuilder(name).append("\n").toString();
     }
 }
