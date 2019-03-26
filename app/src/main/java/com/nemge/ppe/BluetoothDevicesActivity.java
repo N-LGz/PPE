@@ -13,36 +13,24 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.UUID;
-
 
 public class BluetoothDevicesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final String TAG = "MainActivity";
 
     BluetoothAdapter mBluetoothAdapter;
-    Button btnEnableDisable_Discoverable;
-
     BluetoothConnectionService mBluetoothConnection;
-
-    Button btnStartConnection;
-    Button btnSend, btnRead;
-
-    EditText etSend;
-
-    private static final UUID MY_UUID_INSECURE = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
-
     BluetoothDevice mBTDevice;
-
+    Button btnStartConnection, btnONOFF, btnSend, btnRead, btnEnableDisable_Discoverable;
+    EditText etSend;
+    TextView viewSend;
+    private static final UUID MY_UUID_INSECURE = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
     public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
-
     public DeviceListAdapter mDeviceListAdapter;
-
     ListView lvNewDevices;
 
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
@@ -147,29 +135,19 @@ public class BluetoothDevicesActivity extends AppCompatActivity implements Adapt
     };
 
     @Override
-    protected void onDestroy() {
-        Log.d(TAG, "onDestroy: called.");
-        super.onDestroy();
-        unregisterReceiver(mBroadcastReceiver1);
-        unregisterReceiver(mBroadcastReceiver2);
-        unregisterReceiver(mBroadcastReceiver3);
-        unregisterReceiver(mBroadcastReceiver4);
-        mBluetoothAdapter.cancelDiscovery();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_devices);
-        Button btnONOFF = findViewById(R.id.btnONOFF);
+
+        btnONOFF = findViewById(R.id.btnONOFF);
         btnEnableDisable_Discoverable = findViewById(R.id.btnDiscoverable_on_off);
         lvNewDevices = findViewById(R.id.lvNewDevices);
         mBTDevices = new ArrayList<>();
 
         btnStartConnection = findViewById(R.id.btnStartConnection);
-        btnSend = findViewById(R.id.read);
+        btnSend = findViewById(R.id.btnSend);
         etSend = findViewById(R.id.editText);
-        btnRead = findViewById(R.id.read);
+        viewSend = findViewById(R.id.viewSend);
 
         setSupportActionBar(findViewById(R.id.home_toolbar));
         ActionBar actionbar = getSupportActionBar();
@@ -183,7 +161,6 @@ public class BluetoothDevicesActivity extends AppCompatActivity implements Adapt
 
         lvNewDevices.setOnItemClickListener(BluetoothDevicesActivity.this);
 
-
         btnONOFF.setOnClickListener(view -> {
             Log.d(TAG, "onClick: enabling/disabling bluetooth.");
             enableDisableBT();
@@ -191,13 +168,25 @@ public class BluetoothDevicesActivity extends AppCompatActivity implements Adapt
 
         btnStartConnection.setOnClickListener(view -> startConnection());
 
-        btnRead.setOnClickListener(view -> {
-            Read();
+        btnSend.setOnClickListener(view -> {
+                etSend.setText(mBluetoothConnection.getMessage());
+                viewSend.setText("BANANE");
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy: called.");
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver1);
+        unregisterReceiver(mBroadcastReceiver2);
+        unregisterReceiver(mBroadcastReceiver3);
+        unregisterReceiver(mBroadcastReceiver4);
+        mBluetoothAdapter.cancelDiscovery();
+    }
+
     public void startConnection(){
-        startBTConnection(mBTDevice,MY_UUID_INSECURE);
+        startBTConnection(mBTDevice, MY_UUID_INSECURE);
     }
 
     public void startBTConnection(BluetoothDevice device, UUID uuid){
@@ -262,18 +251,6 @@ public class BluetoothDevicesActivity extends AppCompatActivity implements Adapt
             mBluetoothAdapter.startDiscovery();
             IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
-        }
-    }
-
-    public void Read() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File("Honor 7C/Mémoire de stockage interne/bluetooth/ts.txt")));
-            String ligne;
-            while((ligne = reader.readLine()) != null){
-                System.out.println(ligne);
-            }
-        } catch (Exception ex){
-            System.err.println("Error. "+ex.getMessage());
         }
     }
 

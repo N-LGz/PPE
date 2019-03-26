@@ -1,16 +1,6 @@
 package com.nemge.ppe;
 
-import android.app.ProgressDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -18,27 +8,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CountFragment.onFragmentInteractionListener, ChartsFragment.onFragmentInteractionListener {
 
@@ -47,14 +27,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView botView;
     private Button day, week, month, year, prev, next;
     private GraphView graph;
-
     private TextView show;
-    private ProgressBar progress;
     private Button button;
 
+    String str = "200";
+    int doses = 0;
     int value = 0;
-    int result = 200;
-
     private int NumGraph = 1;
 
     private BarGraphSeries SeriesDay, SeriesWeek, SeriesMonth;
@@ -97,6 +75,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         botView = findViewById(R.id.navigation);
         configureBottomView();
 
+        Intent intent = getIntent();
+        if (intent != null){
+            if (intent.hasExtra("doses")){
+                str = intent.getStringExtra("doses");
+            }
+        }
     }
 
     @Override
@@ -168,14 +152,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void discount() {
-        show.setText(result + "");
+        show.setText(str);
+        doses = Integer.parseInt(str);
         button.setOnClickListener(v -> {
-            result--;
+            doses--;
             value++;
             Update();
-            progress.setProgress(result);
-            if(result>=0){
-                show.setText(result + "");
+            if(doses>=0){
+                show.setText(String.valueOf(doses));
             }
         });
     }
@@ -288,7 +272,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         graph.getGridLabelRenderer().setNumHorizontalLabels(2);
     }
 
-
     public void DateChange(View view){
         switch(view.getId()){
             case R.id.previous:
@@ -364,8 +347,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void sendID2() {
         show = findViewById(R.id.title_count);
-        progress = findViewById(R.id.progressBar1);
-        progress.setProgress(result);
         button = findViewById(R.id.button_count);
         discount();
         Update();

@@ -28,7 +28,6 @@
                     android:hint="name"
                     android:id="@+id/Name_EditText"/>
         </LinearLayout>
-
         <LinearLayout
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
@@ -47,7 +46,6 @@
                     android:hint="password"
                     android:id="@+id/Password_EditText"/>
         </LinearLayout>
-
         <Button
                 android:id="@+id/Data_Button"
                 android:layout_width="wrap_content"
@@ -56,7 +54,6 @@
                 android:clickable="true"
                 android:text="Add to BDD">
         </Button>
-
         <Button
             android:id="@+id/Show_Button"
             android:layout_width="wrap_content"
@@ -65,7 +62,6 @@
             android:clickable="true"
             android:text="Show Data">
         </Button>
-
         <Button
                 android:id="@+id/Clear_Button"
                 android:layout_width="wrap_content"

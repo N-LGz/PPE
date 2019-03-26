@@ -23,11 +23,6 @@
                 android:title="@string/nav_bluetooth"
                 app:showAsAction="never"/>
         <item
-                android:id="@+id/nav_disconnect"
-                android:icon="@drawable/ic_power_settings_new_black_24dp"
-                android:title="@string/nav_logout"
-                app:showAsAction="never"/>
-        <item
                 android:id="@+id/nav_test"
                 android:icon="@drawable/ic_create_black_24dp"
                 android:title="@string/nav_test"
@@ -36,6 +31,16 @@
                 android:id="@+id/nav_test_bdd"
                 android:icon="@drawable/ic_data_usage_black_24dp"
                 android:title="@string/nav_test_bdd"
+                app:showAsAction="never"/>
+        <item
+                android:id="@+id/nav_disconnect"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
+                android:title="@string/nav_logout"
+                app:showAsAction="never"/>
+        <item
+                android:id="@+id/nav_refresh"
+                android:icon="@drawable/ic_refresh_black_24dp"
+                android:title="@string/nav_refresh"
                 app:showAsAction="never"/>
     </group>
 </menu>

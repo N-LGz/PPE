@@ -8,4 +8,10 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:orientation="vertical"
         android:gravity="bottom">
+    <TextView
+            android:text="Menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3"/>
 </LinearLayout>

@@ -5,7 +5,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/colorPrimary"
-              tools:context=".ChartsFragment" android:orientation="vertical">
+              tools:context=".ChartsFragment"
+              android:orientation="vertical">
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -43,22 +44,24 @@
                     android:onClick="TimeGraph"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Day" android:layout_weight="1"
+                    android:text="Day"
+                    android:layout_weight="1"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-
             <Button
                     android:id="@+id/week"
                     android:onClick="TimeGraph"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Week" android:layout_weight="1"
+                    android:text="Week"
+                    android:layout_weight="1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     style="@style/Widget.AppCompat.Button.Borderless"/>
         </TableRow>
         <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
             <Button
                     android:id="@+id/month"
                     android:onClick="TimeGraph"
@@ -68,7 +71,6 @@
                     android:layout_weight="1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     style="@style/Widget.AppCompat.Button.Borderless"/>
-
             <Button
                     android:id="@+id/year"
                     android:layout_width="match_parent"

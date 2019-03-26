@@ -7,33 +7,28 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.util.Log;
-
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
+
 import java.util.UUID;
 
 public class BluetoothConnectionService {
-    private static final String TAG = "BluetoothConnectionServ";
 
+    private static final String TAG = "BluetoothConnection";
     private static final String appName = "MYAPP";
-
-    private static final UUID MY_UUID_INSECURE =
-            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
-
+    private static final UUID MY_UUID_INSECURE = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
     private final BluetoothAdapter mBluetoothAdapter;
     Context mContext;
 
     private AcceptThread mInsecureAcceptThread;
-
     private ConnectThread mConnectThread;
+    private ConnectedThread mConnectedThread;
     private BluetoothDevice mmDevice;
     private UUID deviceUUID;
+
     ProgressDialog mProgressDialog;
 
-    private ConnectedThread mConnectedThread;
+    private String incomingMessage = "";
 
     public BluetoothConnectionService(Context context) {
         mContext = context;
@@ -110,7 +105,7 @@ public class BluetoothConnectionService {
             try {
                 Log.d(TAG, "ConnectThread: Trying to create InsecureRfcommSocket using UUID: "
                         +MY_UUID_INSECURE );
-                tmp = mmDevice.createRfcommSocketToServiceRecord(deviceUUID);
+                tmp = mmDevice.createRfcommSocketToServiceRecord(MY_UUID_INSECURE);
             } catch (IOException e) {
                 Log.e(TAG, "ConnectThread: Could not create InsecureRfcommSocket " + e.getMessage());
             }
@@ -179,7 +174,6 @@ public class BluetoothConnectionService {
 
             mmSocket = socket;
             InputStream tmpIn = null;
-            OutputStream tmpOut = null;
 
             //dismiss the progressdialog when connection is established
             try{
@@ -188,11 +182,8 @@ public class BluetoothConnectionService {
                 e.printStackTrace();
             }
 
-
             try {
                 tmpIn = mmSocket.getInputStream();
-                DataInputStream dis = new DataInputStream(tmpIn);
-                dis.read();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -208,7 +199,7 @@ public class BluetoothConnectionService {
             while (true) {
                 try {
                     bytes = mmInStream.read(buffer);
-                    String incomingMessage = new String(buffer, 0, bytes);
+                    incomingMessage = new String(buffer, 0, bytes);
                     Log.d(TAG, "InputStream: " + incomingMessage);
                 } catch (IOException e) {
                     Log.e(TAG, "write: Error reading Input Stream. " + e.getMessage() );
@@ -219,6 +210,7 @@ public class BluetoothConnectionService {
 
         public void cancel() {
             try {
+                Log.d(TAG, "cancel: Closing Client Socket.");
                 mmSocket.close();
             } catch (IOException e) { }
         }
@@ -229,6 +221,17 @@ public class BluetoothConnectionService {
 
         mConnectedThread = new ConnectedThread(mmSocket);
         mConnectedThread.start();
+    }
+
+    public String getMessage(){
+        String message ="";
+        if(incomingMessage!=null && incomingMessage!=""){
+            message = incomingMessage;
+        }
+        else{
+            message = "No message received";
+        }
+        return message;
     }
 }
 
