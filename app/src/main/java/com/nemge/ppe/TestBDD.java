@@ -75,7 +75,7 @@ public class TestBDD extends AppCompatActivity {
                     @Override
                     public void subscribe(ObservableEmitter<Object> e) throws Exception
                     {
-                        User user = new User("2016-08-04");
+                        User user = new User("2016-08-04 17:24:53");
                         userRepository.insertUser(user);
                         e.onComplete();
                     }
