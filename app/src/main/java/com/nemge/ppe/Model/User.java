@@ -17,9 +17,9 @@ public class User {
     @ColumnInfo(name = "id")
     private int id;
 
-
     @ColumnInfo(name = "name")
     private String name;
+
 
     /*
     @ColumnInfo(name = "dose")
