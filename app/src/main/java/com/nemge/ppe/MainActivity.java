@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int value = 0;
     private int NumGraph = 1;
 
+    CountFragment count;
+    ChartsFragment charts;
+
+
     private BarGraphSeries SeriesDay, SeriesWeek, SeriesMonth;
 
     public int[] tabJour1 = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
@@ -65,7 +69,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
 
-        loadFragment(new CountFragment());
+        count = new CountFragment();
+        charts = new ChartsFragment();
+
+        loadFragment(count);
 
         mDrawerLayout =  findViewById(R.id.drawer_layout);
 
@@ -130,11 +137,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = null;
         switch (integer) {
             case R.id.menu_doses:
-                fragment = new CountFragment();
+                fragment = count;
                 break;
 
             case R.id.menu_charts:
-                fragment = new ChartsFragment();
+                fragment = charts;
                 break;
         }
         return loadFragment(fragment);

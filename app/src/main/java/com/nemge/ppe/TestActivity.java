@@ -22,7 +22,6 @@ import java.util.Locale;
 public class TestActivity extends AppCompatActivity {
 
     private static final String FILE_NAME_ONE = "test.txt";
-    private static final String FILE_NAME_TWO = "convert.txt";
 
     TextView original, changed, result;
     Button btnconvert, btnsave, btnload;
@@ -154,8 +153,8 @@ public class TestActivity extends AppCompatActivity {
     }
 
     public void Send(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("doses", result.getText());
+        Intent intent = new Intent(this, TestBDD.class);
+        intent.putExtra("date", changed.getText());
         startActivity(intent);
     }
 

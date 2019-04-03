@@ -1,6 +1,7 @@
 package com.nemge.ppe;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -43,6 +44,8 @@ public class TestBDD extends AppCompatActivity {
     private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
 
+    String date = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,13 @@ public class TestBDD extends AppCompatActivity {
 
         loadData();
 
+        Intent intent = getIntent();
+        if (intent != null){
+            if (intent.hasExtra("date")){
+                date = intent.getStringExtra("date");
+            }
+        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -75,7 +85,7 @@ public class TestBDD extends AppCompatActivity {
                     @Override
                     public void subscribe(ObservableEmitter<Object> e) throws Exception
                     {
-                        User user = new User("2016-08-04 17:24:53");
+                        User user = new User(date);
                         userRepository.insertUser(user);
                         e.onComplete();
                     }

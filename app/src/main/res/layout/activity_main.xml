@@ -32,12 +32,12 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
         <android.support.design.widget.BottomNavigationView
-                android:id="@+id/navigation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="?android:attr/windowBackground"
-                app:menu="@menu/main_menu"/>
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="?android:attr/windowBackground"
+            app:menu="@menu/main_menu"/>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
