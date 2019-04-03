@@ -121,12 +121,10 @@ public class TestActivity extends AppCompatActivity {
         int a = 0;
         LoadFile(view);
         original.setText(waitingText);
-        //changed.setText(moreTest[0]);
-        //changed.setText(moreTest[1]);
         String[] arrayOfString = moreTest[0].split(" ", 0);
-        //changed.setText(arrayOfString[0]);
         String[] year = arrayOfString[3].split(",", 0);
-        query = query + year[0] + "-";
+        query = query + year[0] + "-";//Year
+
         Date date = null;//put your month name here
         try {
             date = new SimpleDateFormat("MMM", Locale.FRENCH).parse(arrayOfString[2]);
@@ -136,15 +134,21 @@ public class TestActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int monthNumber=cal.get(Calendar.MONTH);
-
-        query = query + Integer.toString(monthNumber) + "-";
         if(arrayOfString[1].length() == 1) {
-            query = query + "0" + arrayOfString[1] + " ";
+            query = query + "0" + Integer.toString(monthNumber) + "-";//Month
         }
         else {
-            query = query + arrayOfString[1];
+            query = query + Integer.toString(monthNumber) + "-";//Month
         }
-        query = query + arrayOfString[4];
+        query = query + Integer.toString(monthNumber) + "-";//Month
+
+        if(arrayOfString[1].length() == 1) {
+            query = query + "0" + arrayOfString[1] + " ";//Day
+        }
+        else {
+            query = query + arrayOfString[1];//Day
+        }
+        query = query + arrayOfString[4];//hh:mm:ss
         changed.setText(query);
         //On renvoit le nombre de doses qu'il reste, envoyé par la raspberry
         a = Integer.parseInt(moreTest[1]);
