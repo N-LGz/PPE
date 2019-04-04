@@ -1,6 +1,7 @@
 package com.nemge.ppe;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int value = 0;
     private int NumGraph = 1;
 
-    CountFragment count;
-    ChartsFragment charts;
+    private final CountFragment count = new CountFragment();;
+    private final ChartsFragment charts = new ChartsFragment();
 
 
     private BarGraphSeries SeriesDay, SeriesWeek, SeriesMonth;
@@ -68,9 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-
-        count = new CountFragment();
-        charts = new ChartsFragment();
 
         loadFragment(count);
 
@@ -131,6 +129,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void configureBottomView(){
         botView.setOnNavigationItemSelectedListener(item -> updateMainFragment(item.getItemId()));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restauration des données du contexte utilisateur
+        show.setText(savedInstanceState.getString(str));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Sauvegarde des données du contexte utilisateur
+        outState.putString(str, show.getText().toString());
     }
 
     private Boolean updateMainFragment(Integer integer){

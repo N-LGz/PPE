@@ -1,7 +1,9 @@
 package com.nemge.ppe;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -25,11 +27,11 @@ public class TestActivity extends AppCompatActivity {
 
     TextView original, changed, result;
     Button btnconvert, btnsave, btnload;
-
     EditText test;
+
     String waitingText;
     String[] moreTest = new String[5];
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +79,7 @@ public class TestActivity extends AppCompatActivity {
                 test.setText(sb.toString());
                 waitingText = sb.toString();
                 br.close();
+                file.delete();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
