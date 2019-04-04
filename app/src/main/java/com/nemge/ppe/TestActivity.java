@@ -31,7 +31,7 @@ public class TestActivity extends AppCompatActivity {
 
     String waitingText;
     String[] moreTest = new String[5];
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

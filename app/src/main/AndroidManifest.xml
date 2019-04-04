@@ -26,7 +26,8 @@
 
         <activity
                 android:name=".MainActivity"
-                android:label="Home">
+                android:label="Home"
+                android:launchMode= "singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

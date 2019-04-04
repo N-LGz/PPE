@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private final CountFragment count = new CountFragment();;
     private final ChartsFragment charts = new ChartsFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    Fragment active = count;
+
 
 
     private BarGraphSeries SeriesDay, SeriesWeek, SeriesMonth;
@@ -70,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
 
-        loadFragment(count);
+        fm.beginTransaction().add(R.id.fragment_container, charts, "2").hide(charts).commit();
+        fm.beginTransaction().add(R.id.fragment_container, count, "1").commit();
 
         mDrawerLayout =  findViewById(R.id.drawer_layout);
 
@@ -146,17 +151,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private Boolean updateMainFragment(Integer integer){
-        Fragment fragment = null;
         switch (integer) {
             case R.id.menu_doses:
-                fragment = count;
-                break;
+                fm.beginTransaction().hide(active).show(count).commit();
+                active = count;
+                return true;
 
             case R.id.menu_charts:
-                fragment = charts;
-                break;
+                fm.beginTransaction().hide(active).show(charts).commit();
+                active = charts;
+                return true;
         }
-        return loadFragment(fragment);
+        return false;
     }
 
     private boolean loadFragment(Fragment fragment) {
