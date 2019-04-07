@@ -19,7 +19,6 @@ import com.nemge.ppe.Local.UserDatabase;
 import com.nemge.ppe.Model.User;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -29,12 +28,12 @@ import io.reactivex.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class TestBDD extends AppCompatActivity {
 
     private ListView lstUsers;
-    private FloatingActionButton fab;
+    private FloatingActionButton fab, fabchart;
+    private TextView txtv;
 
     //Adapter
     List<User> userList = new ArrayList<>();
@@ -60,6 +59,8 @@ public class TestBDD extends AppCompatActivity {
 
         lstUsers = findViewById(R.id.lstUsers);
         fab = findViewById(R.id.fab);
+        txtv = findViewById(R.id.txtv);
+        fabchart = findViewById(R.id.fabchart);
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, userList);
         registerForContextMenu(lstUsers);
         lstUsers.setAdapter(adapter);
@@ -110,6 +111,66 @@ public class TestBDD extends AppCompatActivity {
                         });
             }
         });
+
+        fabchart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tabFromTo[] = {"2018", "02", "05", "12"};
+                int month = convertMonth(tabFromTo);
+            }
+        });
+    }
+
+
+    //Dans ce cadre on veut recupérer les doses du 5 fevrier
+    public int convertMonth(String[] tabFromTo) {
+
+        int result = 0;
+
+        Object[] inter = userList.toArray();
+        String tabMonth[] = new String[userList.size()];
+
+        //txtv.setText(inter[0].toString());
+
+        for (int i = 0; i < userList.size(); i++){
+            tabMonth[i] = inter[i].toString();
+        }
+
+        //txtv.setText(tabMonth[0]);
+
+        //String[] date = tabMonth[0].split("-", 0);
+        //txtv.setText(date[2]);
+
+        for (int i = 0; i<tabMonth.length; i++) {
+            String[] date = tabMonth[i].split("-", 0);
+            String[] day = date[2].split(" ", 0);
+            String[] time = day[1].split(":", 0);
+
+
+            switch (tabFromTo.length) {
+                case 2 :
+                    if (date[0].equals(tabFromTo[0]) && date[1].equals(tabFromTo[1])){
+                        result++;
+                    }
+                    break;
+                case 3 :
+                    if (date[0].equals(tabFromTo[0]) && date[1].equals(tabFromTo[1]) && day[0].equals(tabFromTo[2])){
+                       result++;
+                    }
+                    break;
+                case 4 :
+                    if (date[0].equals(tabFromTo[0]) && date[1].equals(tabFromTo[1]) && day[0].equals(tabFromTo[2])
+                            && time[0].equals(tabFromTo[3])) {
+                        result++;
+                    }
+                    break;
+                default:
+                    Toast.makeText(TestBDD.this, "Taille du tableau non conforme", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        txtv.setText(Integer.toString(result));
+        return result;
     }
 
     @Override
@@ -267,6 +328,7 @@ public class TestBDD extends AppCompatActivity {
                 .subscribe(new Consumer<List<User>>() {
                                @Override
                                public void accept(List<User> users) throws Exception {
+                                   Toast.makeText(TestBDD.this, "LoadData", Toast.LENGTH_SHORT).show();
                                    onGetAllUserSuccess(users);
                                }
                            }, new Consumer<Throwable>() {

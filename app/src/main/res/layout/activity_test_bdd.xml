@@ -7,6 +7,13 @@
         android:layout_height="match_parent"
         tools:context=".TestBDD">
 
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Des trucs"
+            android:paddingVertical="10dp"
+            android:id="@+id/txtv"
+            android:layout_below="@id/home_toolbar"/>
 
         <android.support.v7.widget.Toolbar
                 android:id="@+id/home_toolbar"
@@ -28,9 +35,19 @@
             android:clickable="true"
             app:srcCompat="@drawable/ic_add_black_24dp"/>
 
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fabchart"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_done_black_24dp"/>
+
     <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/home_toolbar"
+            android:layout_below="@id/txtv"
             android:id="@+id/lstUsers"/>
 </RelativeLayout>

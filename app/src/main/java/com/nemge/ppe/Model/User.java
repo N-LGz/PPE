@@ -2,12 +2,6 @@ package com.nemge.ppe.Model;
 
 import android.arch.persistence.room.*;
 import io.reactivex.annotations.NonNull;
-import java.util.Date;
-
-import com.nemge.ppe.Model.TimeStampConverter;
-import com.nemge.ppe.Model.Converter;
-
-import java.util.Date;
 
 @Entity(tableName = "users")
 public class User {
