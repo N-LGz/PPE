@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">PPE</string>
     <!--Login-->
     <string name="title_login">Bron\'Connect</string>
@@ -14,12 +15,14 @@
     <string name="nav_test">Test</string>
     <string name="nav_test_bdd">Test BDD</string>
     <string name="nav_refresh">Refresh</string>
+    <string name="nav_clear">Clear BDD</string>
     <!--Home PagerAdapter-->
     <string name="home_doses">Doses</string>
     <string name="home_graphics">Consumption</string>
     <!--Main Menu-->
     <string name="home_count">Doses</string>
     <string name="home_charts">Charts</string>
+    <string name ="home_bdd">BDD</string>
     <!--Menu Settings-->
     <string name="menu_settings_languages">Languages</string>
     <string name="menu_settings_notifications">Notifications</string>

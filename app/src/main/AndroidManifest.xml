@@ -18,7 +18,8 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+                  android:launchMode= "singleInstance">
         </activity>
 
         <activity android:name=".SignActivity">
@@ -27,10 +28,10 @@
         <activity
                 android:name=".MainActivity"
                 android:label="Home"
+                android:screenOrientation="portrait"
                 android:launchMode= "singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

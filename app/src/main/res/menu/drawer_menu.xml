@@ -42,5 +42,12 @@
                 android:icon="@drawable/ic_refresh_black_24dp"
                 android:title="@string/nav_refresh"
                 app:showAsAction="never"/>
+
+        <item
+                android:id="@+id/nav_clear"
+                android:icon="@drawable/ic_delete_forever_black_24dp"
+                android:title="@string/nav_clear"
+                app:showAsAction="never"/>
+
     </group>
 </menu>
