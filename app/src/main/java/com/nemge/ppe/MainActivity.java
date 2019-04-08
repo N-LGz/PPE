@@ -548,9 +548,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
                 ", name) FROM users WHERE date(name, 'start of day')" +//start of day ex: start of month
-                " = '2018-02-05' GROUP BY strftime('%H', name)", new Object[]{});
+                " = '2018-04-08' GROUP BY strftime('%H', name)", new Object[]{});
         while(c.moveToNext()) {
             tabDay[Integer.parseInt(c.getString(1))] = c.getShort(0);
+        }
+
+        for(int i = 0; i<tabMonth.length; i++)
+        {
+            tabMonth[i] = 0;
+        }
+        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%M'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
+                ", name) FROM users WHERE date(name, 'start of month')" +//start of day ex: start of month
+                " = '2018-04-08' GROUP BY strftime('%M', name)", new Object[]{});
+        while(d.moveToNext()) {
+            tabMonth[Integer.parseInt(d.getString(1))] = d.getShort(0);
         }
     }
 
@@ -635,7 +646,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void subscribe(ObservableEmitter<Object> e) throws Exception
                     {
-                        User user = new User("2018-02-06 12:44:53");
+                        User user = new User("2018-04-08 16:20:45");
                         userRepository.insertUser(user);
                         e.onComplete();
                     }
@@ -664,7 +675,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fabchart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tabFromTo[] = {"2018", "02", "05", "12"};
+                String tabFromTo[] = {"2018", "04", "08", "12"};
                 int doses = convertMonth(tabFromTo);
             }
         });
