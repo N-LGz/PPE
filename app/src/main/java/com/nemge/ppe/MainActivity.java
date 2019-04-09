@@ -29,8 +29,12 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.nemge.ppe.Database.UserRepository;
+
 /*import com.nemge.ppe.Local.UserDAO;
 import com.nemge.ppe.Local.UserDAO_Impl;*/
+
+import com.nemge.ppe.Local.UserDAO;
+
 import com.nemge.ppe.Local.UserDataSource;
 import com.nemge.ppe.Local.UserDatabase;
 import com.nemge.ppe.Model.User;
@@ -367,6 +371,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
                 SeriesYear.setTitle("Cette année");
 
+                //SeriesYear = new LineGraphSeries<>(generateDataYear(tabYear));
+                //SeriesYear.setTitle("Year");
+
                 graphDay.removeAllSeries();
                 graphDay.addSeries(SeriesDay);
                 graphDay.getLegendRenderer().setVisible(true);
@@ -530,19 +537,79 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void AddData(){
+
         int doses = 0;
-        int S = 0;
+
+        /*int Ad, Md, Dd;
+        String m, j, h;
+        /// Ajout des mois au tableau de l'année
+        for(int i = 0; i<tabYear.length; i++)
+        {
+            if(i<10)
+            {
+                m = "0" + String.valueOf(i);
+            }
+            else
+            {
+                m = String.valueOf(i);
+            }
+            String tabM[] = {"2019",m};
+            Ad = convertMonth(tabM);
+            tabYear[i] = Ad;
+        }
+        ///Ajout des jours au tableau du mois
+        for(int i = 0; i<tabMonth.length; i++)
+        {
+            if(i<10)
+            {
+                j = "0" + String.valueOf(i);
+
+            }
+            else
+            {
+                j = String.valueOf(i);
+
+            }
+            String tabJ[] = {"2019","04",j};
+            Md = convertMonth(tabJ);
+            tabMonth[i] = Md;
+        }
+        ///Ajout des heures au tableau des jours
+        for(int i = 0; i<tabDay.length; i++)
+        {
+            if(i<10)
+            {
+                h = "0" + String.valueOf(i);
+
+            }
+            else
+            {
+                h = String.valueOf(i);
+
+            }
+            String tabH[] = {"2019","04","08",h};
+            Dd = convertMonth(tabH);
+            tabDay[i] = Dd;
+        }*/
+
+        testDay();
+        testMonth();
+        //testYear();
+    }
+
+    public void testDay()
+    {
         for(int i = 0; i<tabDay.length; i++)
         {
             tabDay[i] = 0;
         }
-        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
-                ", name) FROM users WHERE date(name, 'start of day')" +//start of day ex: start of month
-                " = '2018-04-08' GROUP BY strftime('%H', name)", new Object[]{});
+        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H', name) FROM users WHERE date(name, 'start of day') = '2018-04-08' GROUP BY strftime('%H', name)", new Object[]{});
         while(c.moveToNext()) {
             tabDay[Integer.parseInt(c.getString(1))] = c.getShort(0);
         }
+    }
 
+    public void testMonth(){
         for(int i = 0; i<tabMonth.length; i++)
         {
             tabMonth[i] = 0;
@@ -550,6 +617,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%m'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
                 ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
                 " = '2018-01-01' GROUP BY strftime('%m', name)", new Object[]{});
+
+        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%m'" +//%H formateur pour indiquer l'heure Ex: %m pour mois
+                ", name) FROM users WHERE date(name, 'start of month')" +//start of day ex: start of month
+                " = '2018-04-01' GROUP BY strftime('%m', name)", new Object[]{});
+
         while(d.moveToNext()) {
             tabMonth[Integer.parseInt(d.getString(1))] = d.getShort(0);
         }
@@ -565,6 +637,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             doses = e.getShort(0);
             S = doses + S;
             tabYear[0] = S;
+        }
+    }
+
+    public void testYear(){
+        for(int i = 0; i<tabYear.length; i++)
+        {
+            tabYear[i] = 0;
+        }
+        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%Y'" +//%H formateur pour indiquer l'heure Ex: %m pour mois
+                ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
+                " = '2018-01-01' GROUP BY strftime('%Y', name)", new Object[]{});
+        while(d.moveToNext()) {
+            tabYear[Integer.parseInt(d.getString(1))] = d.getShort(0);
         }
     }
 
@@ -601,6 +686,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return values;
     }
 
+
     public String LoadFile(){
         String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + "test.txt";
         File file = new File(path);
@@ -624,6 +710,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+    private DataPoint[] generateDataYear() {
+        int count = 12;
+        DataPoint[] values = new DataPoint[count];
+        for (int i=0; i<count; i++) {
+            double x = i;
+            double y = Math.sin(i*2);
+            DataPoint v = new DataPoint(x, y);
+            values[i] = v;
         }
         else {
             sb.append("LUL");
@@ -804,6 +899,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void subscribe(ObservableEmitter<Object> e) throws Exception
                     {
+
                         //User user = new User("2018-03-08 10:20:45");
                         User user = new User(date);
                         userRepository.insertUser(new User(date));
