@@ -2,6 +2,7 @@ package com.nemge.ppe;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -22,13 +23,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.LabelFormatter;
+import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.nemge.ppe.Database.UserRepository;
-import com.nemge.ppe.Local.UserDAO;
-import com.nemge.ppe.Local.UserDAO_Impl;
+/*import com.nemge.ppe.Local.UserDAO;
+import com.nemge.ppe.Local.UserDAO_Impl;*/
 import com.nemge.ppe.Local.UserDataSource;
 import com.nemge.ppe.Local.UserDatabase;
 import com.nemge.ppe.Model.User;
@@ -41,8 +43,10 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CountFragment.onFragmentInteractionListener, ChartsFragment.onFragmentInteractionListener, BDDFragment.OnFragmentInteractionListener {
 
@@ -53,15 +57,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView show;
     private Button button;
 
-    String str = "200";
+    String str = "";
     String date = "";
+    String doses = "";
+    String file = "";
+
+    String waitingText;
+    String[] moreTest = new String[5];
 
     int tabDay[] = new int[24];
-    int tabMonth[] = new int[31];
-    int tabYear[] = new int[12];
+    int tabMonth[] = new int[12];
+    int tabYear[] = new int[2];
 
-    int doses = 0;
-    int value = 0;
+    private static final String FILE_NAME_ONE = "test.txt";
 
     private final CountFragment count = new CountFragment();;
     private final ChartsFragment charts = new ChartsFragment();
@@ -79,9 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
 
-
-
-    private LineGraphSeries SeriesDay, SeriesMonth, SeriesYear;
+    private LineGraphSeries SeriesDay, SeriesMonth;
+    private BarGraphSeries SeriesYear;
 
 
     @Override
@@ -112,12 +119,60 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userRepository = UserRepository.getInstance(UserDataSource.getInstance(userDatabase.userDAO()));
 
         Intent intent = getIntent();
-        if (intent != null) {
-            if (intent.hasExtra("doses")) {
+        if (intent != null){
+            if (intent.hasExtra("doses") && intent.hasExtra("date") ){
                 str = intent.getStringExtra("doses");
-                date = intent.getStringExtra("date");
+                date = intent.getStringExtra ("date");
             }
         }
+    }
+
+    public void UseDose(){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+                    ///1ère étape: réception et traitement du fichier
+                    file = LoadFile();
+                    SaveFile(file);
+                    date = convertDate();
+                    doses = String.valueOf(convertDoses());
+
+                    //2ème étape: ajout de la date à la BDD
+                    AddToBDD();
+                    AddData();
+
+                    //3ème étape: mise à jour des graphes et de l'afficheur
+                    show.setText(doses);
+
+                    SeriesDay = new LineGraphSeries<>(generateDataDay(tabDay));
+                    SeriesDay.setTitle("Aujourd'hui");
+
+                    SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
+                    SeriesMonth.setTitle("Ce mois-ci");
+
+                    SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
+                    SeriesYear.setTitle("Cette année");
+
+                    graphDay.removeAllSeries();
+                    graphDay.addSeries(SeriesDay);
+                    graphDay.getLegendRenderer().setVisible(true);
+
+                    graphMonth.removeAllSeries();
+                    graphMonth.addSeries(SeriesMonth);
+                    graphMonth.getLegendRenderer().setVisible(true);
+
+                    graphYear.removeAllSeries();
+                    graphYear.addSeries(SeriesYear);
+                    graphYear.getLegendRenderer().setVisible(true);
+                    graphYear.getGridLabelRenderer().setNumHorizontalLabels(3);
+
+                } catch(NullPointerException e){
+                    Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public int convertMonth(String[] tabFromTo) {
@@ -304,10 +359,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 AddData();
 
                 SeriesDay = new LineGraphSeries<>(generateDataDay(tabDay));
-                SeriesDay.setTitle("Today");
+                SeriesDay.setTitle("Aujourd'hui");
 
                 SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
-                SeriesMonth.setTitle("Mois");
+                SeriesMonth.setTitle("Ce mois-ci");
+
+                SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
+                SeriesYear.setTitle("Cette année");
 
                 graphDay.removeAllSeries();
                 graphDay.addSeries(SeriesDay);
@@ -316,6 +374,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 graphMonth.removeAllSeries();
                 graphMonth.addSeries(SeriesMonth);
                 graphMonth.getLegendRenderer().setVisible(true);
+
+                graphYear.removeAllSeries();
+                graphYear.addSeries(SeriesYear);
+                graphYear.getLegendRenderer().setVisible(true);
+                graphYear.getGridLabelRenderer().setNumHorizontalLabels(3);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -466,82 +529,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    private boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-            return true;
-        }
-        return false;
-    }
-
-    public void discount() {
-        show.setText(str);
-        doses = Integer.parseInt(str);
-        button.setOnClickListener(v -> {
-            doses--;
-            value++;
-            //Update();
-            if(doses>=0){
-                show.setText(String.valueOf(doses));
-            }
-        });
-    }
-
     public void AddData(){
-        /*int Ad, Md, Dd;
-        String m, j, h;
-        /// Ajout des mois au tableau de l'année
-        for(int i = 0; i<tabYear.length; i++)
-        {
-            if(i<10)
-            {
-                m = "0" + String.valueOf(i);
-            }
-            else
-            {
-                m = String.valueOf(i);
-            }
-            String tabM[] = {"2019",m};
-            Ad = convertMonth(tabM);
-            tabYear[i] = Ad;
-        }
-        ///Ajout des jours au tableau du mois
-        for(int i = 0; i<tabMonth.length; i++)
-        {
-            if(i<10)
-            {
-                j = "0" + String.valueOf(i);
-
-            }
-            else
-            {
-                j = String.valueOf(i);
-
-            }
-            String tabJ[] = {"2019","04",j};
-            Md = convertMonth(tabJ);
-            tabMonth[i] = Md;
-        }
-        ///Ajout des heures au tableau des jours
-        for(int i = 0; i<tabDay.length; i++)
-        {
-            if(i<10)
-            {
-                h = "0" + String.valueOf(i);
-
-            }
-            else
-            {
-                h = String.valueOf(i);
-
-            }
-            String tabH[] = {"2019","04","08",h};
-            Dd = convertMonth(tabH);
-            tabDay[i] = Dd;
-        }*/
+        int doses = 0;
+        int S = 0;
         for(int i = 0; i<tabDay.length; i++)
         {
             tabDay[i] = 0;
@@ -557,11 +547,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             tabMonth[i] = 0;
         }
-        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%M'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
-                ", name) FROM users WHERE date(name, 'start of month')" +//start of day ex: start of month
-                " = '2018-04-08' GROUP BY strftime('%M', name)", new Object[]{});
+        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%m'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
+                ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
+                " = '2018-01-01' GROUP BY strftime('%m', name)", new Object[]{});
         while(d.moveToNext()) {
             tabMonth[Integer.parseInt(d.getString(1))] = d.getShort(0);
+        }
+
+        for(int i = 0; i<tabYear.length; i++)
+        {
+            tabYear[i] = 0;
+        }
+        android.database.Cursor e = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%m'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
+                ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
+                " = '2018-01-01' GROUP BY strftime('%m', name)", new Object[]{});
+        while(e.moveToNext()) {
+            doses = e.getShort(0);
+            S = doses + S;
+            tabYear[0] = S;
         }
     }
 
@@ -576,20 +579,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return values;
     }
 
-    public DataPoint[] generateDataWeek(int[] tab) {
-        int count = 7;
-        DataPoint[] values = new DataPoint[count];
-        for (int i=0; i<count; i++) {
-            double x = i;
-            double y = tab[i];
-            DataPoint v = new DataPoint(x, y);
-            values[i] = v;
-        }
-        return values;
-    }
-
     public DataPoint[] generateDataMonth(int[] tab) {
-        int count = 31;
+        int count = 12;
         DataPoint[] values = new DataPoint[count];
         for (int i=0; i<count; i++) {
             int y = tab[i];
@@ -599,16 +590,182 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return values;
     }
 
-    private DataPoint[] generateData() {
-        int count = 30;
+    private DataPoint[] generateDataYear(int[] tab) {
+        int count = 2;
         DataPoint[] values = new DataPoint[count];
         for (int i=0; i<count; i++) {
-            double x = i;
-            double y = Math.sin(i*2);
-            DataPoint v = new DataPoint(x, y);
+            double y = tab[i];
+            DataPoint v = new DataPoint(i, y);
             values[i] = v;
         }
         return values;
+    }
+
+    public String LoadFile(){
+        String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + "test.txt";
+        File file = new File(path);
+        StringBuilder sb = new StringBuilder();
+
+        if (file.isFile() && file.getPath().endsWith(".txt")) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                int i = 0;
+                while((line = br.readLine()) != null) {
+                    sb.append(line);
+                    moreTest[i] = line;
+                    i++;
+                }
+                waitingText = sb.toString();
+                br.close();
+                file.delete();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            sb.append("LUL");
+        }
+        return sb.toString();
+    }
+
+    public void SaveFile(String s) {
+
+        String text = s;
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME_ONE, MODE_PRIVATE);
+            fos.write(text.getBytes());
+            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME_ONE, Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public int convertDoses() {
+
+        String query = "";
+        int a = 0;
+        LoadFile();
+        String[] arrayOfString = moreTest[0].split(" ", 0);
+        String[] year = arrayOfString[3].split(",", 0);
+        query = query + year[0] + "-";//Year
+
+        Date date = null;//put your month name here
+        try {
+            date = new SimpleDateFormat("MMM", Locale.FRENCH).parse(arrayOfString[2]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int monthNumber=cal.get(Calendar.MONTH);
+        if(arrayOfString[1].length() == 1) {
+            query = query + "0" + Integer.toString(monthNumber) + "-";//Month
+        }
+        else {
+            query = query + Integer.toString(monthNumber) + "-";//Month
+        }
+        query = query + Integer.toString(monthNumber) + "-";//Month
+
+        if(arrayOfString[1].length() == 1) {
+            query = query + "0" + arrayOfString[1] + " ";//Day
+        }
+        else {
+            query = query + arrayOfString[1];//Day
+        }
+        query = query + arrayOfString[4];//hh:mm:ss
+
+        //On renvoie le nombre de doses qu'il reste, envoyé par la raspberry
+
+        a = Integer.parseInt(moreTest[1]);
+        return a;
+
+    }
+
+    public String convertDate() {
+
+        String query = "";
+        int a = 0;
+        LoadFile();
+        String[] arrayOfString = moreTest[0].split(" ", 0);
+        String[] year = arrayOfString[3].split(",", 0);
+        query = query + year[0] + "-";//Year
+
+        Date date = null;//put your month name here
+        try {
+            date = new SimpleDateFormat("MMM", Locale.FRENCH).parse(arrayOfString[2]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int monthNumber=cal.get(Calendar.MONTH);
+        if(arrayOfString[1].length() == 1) {
+            query = query + "0" + Integer.toString(monthNumber) + "-";//Month
+        }
+        else {
+            query = query + Integer.toString(monthNumber) + "-";//Month
+        }
+        query = query + Integer.toString(monthNumber) + "-";//Month
+
+        if(arrayOfString[1].length() == 1) {
+            query = query + "0" + arrayOfString[1] + " ";//Day
+        }
+        else {
+            query = query + arrayOfString[1];//Day
+        }
+        query = query + arrayOfString[4];//hh:mm:ss
+        //On renvoit le nombre de doses qu'il reste, envoyé par la raspberry
+        a = Integer.parseInt(moreTest[1]);
+        return query;
+
+    }
+
+    public void AddToBDD(){
+        Disposable disposable = (Disposable) io.reactivex.Observable.create(new ObservableOnSubscribe<Object>()
+        {
+            @Override
+            public void subscribe(ObservableEmitter<Object> e) throws Exception
+            {
+                //User user = new User("2018-03-08 10:20:45");
+                User user = new User(date);
+                userRepository.insertUser(new User(date));
+                userRepository.insertUser(user);
+                e.onComplete();
+            }
+        })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        Toast.makeText(MainActivity.this, "User added !", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Toast.makeText(MainActivity.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        loadData();//Refresh data
+                    }
+                });
     }
 
     public void sendID() {
@@ -622,8 +779,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         show = findViewById(R.id.title_count);
         button = findViewById(R.id.button_count);
-        discount();
-        //Update();
+
+        UseDose();
+
     }
 
     @Override
@@ -646,7 +804,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void subscribe(ObservableEmitter<Object> e) throws Exception
                     {
-                        User user = new User("2018-04-08 16:20:45");
+                        //User user = new User("2018-03-08 10:20:45");
+                        User user = new User(date);
+                        userRepository.insertUser(new User(date));
                         userRepository.insertUser(user);
                         e.onComplete();
                     }

@@ -160,10 +160,10 @@ public class TestActivity extends AppCompatActivity {
     }
 
     public void Send(View view){
-        Intent intent = new Intent(this, TestBDD.class);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("doses", result.getText());
         intent.putExtra("date", changed.getText());
         startActivity(intent);
     }
-
 }
 

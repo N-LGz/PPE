@@ -22,7 +22,7 @@
     <!--Main Menu-->
     <string name="home_count">Doses</string>
     <string name="home_charts">Charts</string>
-    <string name ="home_bdd">BDD</string>
+    <string name="home_bdd">BDD</string>
     <!--Menu Settings-->
     <string name="menu_settings_languages">Languages</string>
     <string name="menu_settings_notifications">Notifications</string>
@@ -35,5 +35,8 @@
     <string name="add_user">ADD AN USER</string>
     <string name="enter_name">Name</string>
     <string name="enter_password">Password</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
