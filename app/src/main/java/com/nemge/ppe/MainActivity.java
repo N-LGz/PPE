@@ -28,7 +28,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.nemge.ppe.Database.UserRepository;
 import com.nemge.ppe.Local.UserDAO;
-import com.nemge.ppe.Local.UserDAO_Impl;
+
 import com.nemge.ppe.Local.UserDataSource;
 import com.nemge.ppe.Local.UserDatabase;
 import com.nemge.ppe.Model.User;
@@ -309,6 +309,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
                 SeriesMonth.setTitle("Mois");
 
+                //SeriesYear = new LineGraphSeries<>(generateDataYear(tabYear));
+                //SeriesYear.setTitle("Year");
+
                 graphDay.removeAllSeries();
                 graphDay.addSeries(SeriesDay);
                 graphDay.getLegendRenderer().setVisible(true);
@@ -542,26 +545,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Dd = convertMonth(tabH);
             tabDay[i] = Dd;
         }*/
+
+        testDay();
+        testMonth();
+        //testYear();
+    }
+
+    public void testDay()
+    {
         for(int i = 0; i<tabDay.length; i++)
         {
             tabDay[i] = 0;
         }
-        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
-                ", name) FROM users WHERE date(name, 'start of day')" +//start of day ex: start of month
-                " = '2018-04-08' GROUP BY strftime('%H', name)", new Object[]{});
+        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H', name) FROM users WHERE date(name, 'start of day') = '2018-04-08' GROUP BY strftime('%H', name)", new Object[]{});
         while(c.moveToNext()) {
             tabDay[Integer.parseInt(c.getString(1))] = c.getShort(0);
         }
+    }
 
+    public void testMonth(){
         for(int i = 0; i<tabMonth.length; i++)
         {
             tabMonth[i] = 0;
         }
-        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%M'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
+        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%m'" +//%H formateur pour indiquer l'heure Ex: %m pour mois
                 ", name) FROM users WHERE date(name, 'start of month')" +//start of day ex: start of month
-                " = '2018-04-08' GROUP BY strftime('%M', name)", new Object[]{});
+                " = '2018-04-01' GROUP BY strftime('%m', name)", new Object[]{});
         while(d.moveToNext()) {
             tabMonth[Integer.parseInt(d.getString(1))] = d.getShort(0);
+        }
+    }
+
+    public void testYear(){
+        for(int i = 0; i<tabYear.length; i++)
+        {
+            tabYear[i] = 0;
+        }
+        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%Y'" +//%H formateur pour indiquer l'heure Ex: %m pour mois
+                ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
+                " = '2018-01-01' GROUP BY strftime('%Y', name)", new Object[]{});
+        while(d.moveToNext()) {
+            tabYear[Integer.parseInt(d.getString(1))] = d.getShort(0);
         }
     }
 
@@ -599,8 +623,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return values;
     }
 
-    private DataPoint[] generateData() {
-        int count = 30;
+    private DataPoint[] generateDataYear() {
+        int count = 12;
         DataPoint[] values = new DataPoint[count];
         for (int i=0; i<count; i++) {
             double x = i;
@@ -646,7 +670,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void subscribe(ObservableEmitter<Object> e) throws Exception
                     {
-                        User user = new User("2018-04-08 16:20:45");
+                        User user = new User("2018-06-15 02:20:45");
                         userRepository.insertUser(user);
                         e.onComplete();
                     }
