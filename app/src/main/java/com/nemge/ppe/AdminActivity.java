@@ -19,11 +19,8 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        this.setSupportActionBar(this.findViewById(R.id.home_toolbar));
-        ActionBar actionbar = this.getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setDisplayHomeAsUpEnabled(true);
-        }
+        setSupportActionBar(findViewById(R.id.home_toolbar));
+        ActionBar actionbar = getSupportActionBar();
 
         db = new SQLiteDatabasePPE(this);
         name = findViewById(R.id.enter_name2);

@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView botView;
     private GraphView graph;
     private TextView show;
+    private RadioButton buttonDay, buttonMonth, buttonYear;
 
     String str = "";
     String date = "";
@@ -150,18 +151,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
             SeriesYear.setTitle("Cette année");
 
-          /*  graphDay.removeAllSeries();
-            graphDay.addSeries(SeriesDay);
-            graphDay.getLegendRenderer().setVisible(true);
+            if(buttonDay.isChecked())
+            {
+                graph.removeAllSeries();
+                graph.addSeries(SeriesDay);
+                graph.getLegendRenderer().setVisible(true);
+            }
 
-            graphMonth.removeAllSeries();
-            graphMonth.addSeries(SeriesMonth);
-            graphMonth.getLegendRenderer().setVisible(true);
+            if(buttonMonth.isChecked())
+            {
+                graph.removeAllSeries();
+                graph.addSeries(SeriesMonth);
+                graph.getLegendRenderer().setVisible(true);
+            }
 
-            graphYear.removeAllSeries();
-            graphYear.addSeries(SeriesYear);
-            graphYear.getLegendRenderer().setVisible(true);
-            graphYear.getGridLabelRenderer().setNumHorizontalLabels(3);*/
+            if(buttonYear.isChecked())
+            {
+                graph.removeAllSeries();
+                graph.addSeries(SeriesYear);
+                graph.getLegendRenderer().setVisible(true);
+                graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+            }
 
         } catch(NullPointerException e){
             Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
@@ -440,13 +450,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intentTutorial = new Intent(this, TutorialActivity.class);
                 startActivity(intentTutorial);
                 break;
-            case R.id.nav_settings:
-                Intent intentSettings = new Intent(this, SettingsActivity.class);
-                startActivity(intentSettings);
+            case R.id.nav_notifications:
+                Intent intentNotifications = new Intent(this, NotificationsActivity.class);
+                startActivity(intentNotifications);
                 break;
             case R.id.nav_bluetooth:
                 Intent intentBT = new Intent(this, BluetoothDevicesActivity.class);
                 startActivity(intentBT);
+                break;
+            case R.id.nav_admin:
+                Intent intentAdmin = new Intent(this, AdminActivity.class);
+                startActivity(intentAdmin);
                 break;
             case R.id.nav_disconnect:
                 Intent intentLog = new Intent(this, LoginActivity.class);
@@ -513,7 +527,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             tabDay[i] = 0;
         }
-        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H', name) FROM users WHERE date(name, 'start of day') = '2018-04-08' GROUP BY strftime('%H', name)", new Object[]{});
+        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H', name) FROM users WHERE date(name, 'start of day') = '2019-03-06' GROUP BY strftime('%H', name)", new Object[]{});
         while(c.moveToNext()) {
             tabDay[Integer.parseInt(c.getString(1))] = c.getShort(0);
         }
@@ -530,7 +544,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%m'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
                 ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
-                " = '2018-01-01' GROUP BY strftime('%m', name)", new Object[]{});
+                " = '2019-01-01' GROUP BY strftime('%m', name)", new Object[]{});
         while(d.moveToNext()) {
             tabMonth[Integer.parseInt(d.getString(1))] = d.getShort(0);
         }
@@ -541,7 +555,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         android.database.Cursor e = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%m'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
                 ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
-                " = '2018-01-01' GROUP BY strftime('%m', name)", new Object[]{});
+                " = '2019-01-01' GROUP BY strftime('%m', name)", new Object[]{});
         while(e.moveToNext()) {
             doses = e.getShort(0);
             S = doses + S;
@@ -766,6 +780,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void sendID() {
 
         graph = findViewById(R.id.graph);
+        buttonDay = findViewById(R.id.button_day);
+        buttonMonth = findViewById(R.id.button_month);
+        buttonYear = findViewById(R.id.button_year);
 
     }
 
