@@ -25,6 +25,7 @@ public class SignActivity extends AppCompatActivity {
         age = findViewById(R.id.age_entry);
         mail = findViewById(R.id.mail_sign);
         password = findViewById(R.id.password_sign);
+        register = findViewById(R.id.signup_button);
 
         AddData();
     }

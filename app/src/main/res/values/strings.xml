@@ -21,4 +21,8 @@
     <string name="home_charts">Graphiques</string>
     <string name="home_bdd">Historique</string>
 
+    <!--Notifications-->
+    <string name="channel_name">ATTENTION</string>
+    <string name="channel_description">Il faut changer la bonbonne!</string>
+
 </resources>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,7 +27,13 @@ public class LoginActivity extends AppCompatActivity {
         Login();
 
         button_register = findViewById(R.id.button_sign);
-        NewAccount();
+        button_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewAccount();
+            }
+        });
+
     }
 
     public void Login() {
@@ -49,9 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void NewAccount(){
-        button_register.setOnClickListener(v ->{
-            Intent signup = new Intent(this, SignActivity.class);
-            startActivity(signup);
-        });
+        Intent signup = new Intent(this, SignActivity.class);
+        startActivity(signup);
     }
 }

@@ -1,8 +1,13 @@
 package com.nemge.ppe;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +15,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView botView;
     private GraphView graph;
     private TextView show;
-    private RadioButton buttonDay, buttonMonth, buttonYear;
+    private RadioButton buttonDay, buttonMonth;
 
     String str = "";
     String date = "";
@@ -70,14 +77,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     String username = "";
 
+    String CHANNEL_ID = "Bron'Connect";
+
     String waitingText;
     String[] moreTest = new String[5];
 
     int tabDay[] = new int[24];
     int tabMonth[] = new int[12];
-    int tabYear[] = new int[2];
 
     private static final String FILE_NAME_ONE = "test.txt";
+    private static final String FILE_NAME_TWO = "off.txt";
 
     private final CountFragment count = new CountFragment();;
     private final ChartsFragment charts = new ChartsFragment();
@@ -93,13 +102,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UserRepository userRepository;
 
     private LineGraphSeries SeriesDay, SeriesMonth;
-    private BarGraphSeries SeriesYear;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        createNotificationChannel();
 
         setSupportActionBar(findViewById(R.id.home_toolbar));
         ActionBar actionbar = getSupportActionBar();
@@ -131,6 +140,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 
     public String KeepDate(String date)
     {
@@ -159,14 +184,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //3ème étape: mise à jour des graphes et de l'afficheur
             show.setText(doses);
 
+            if(Integer.parseInt(doses)<4)
+            {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_info_black_24dp)
+                        .setContentTitle("ATTENTION")
+                        .setContentText("Il ne vous reste que " + doses + " doses. Pensez à changer de bonbonne.")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+                // notificationId is a unique int for each notification that you must define
+                notificationManager.notify(0, builder.build());
+
+            }
+
             SeriesDay = new LineGraphSeries<>(generateDataDay(tabDay));
             SeriesDay.setTitle("Aujourd'hui");
 
             SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
-            SeriesMonth.setTitle("Ce mois-ci");
-
-            SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
-            SeriesYear.setTitle("Cette année");
+            SeriesMonth.setTitle("Cette année");
 
         } catch(NullPointerException e){
             Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
@@ -547,11 +590,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         testDay();
         testMonth();
-        //testYear();
 
     }
 
     public void testDay() {
+
         for(int i = 0; i<tabDay.length; i++)
         {
             tabDay[i] = 0;
@@ -564,9 +607,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void testMonth() {
 
-        int doses = 0;
-        int S =0;
-
         for(int i = 0; i<tabMonth.length; i++)
         {
             tabMonth[i] = 0;
@@ -576,32 +616,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 " = '2019-01-01' GROUP BY strftime('%m', name)", new Object[]{});
         while(d.moveToNext()) {
             tabMonth[Integer.parseInt(d.getString(1))] = d.getShort(0);
-        }
-
-        for(int i = 0; i<tabYear.length; i++)
-        {
-            tabYear[i] = 0;
-        }
-        android.database.Cursor e = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%m'" +//%H formateur pour indiquer l'heure Ex: %M pour mois
-                ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
-                " = '2019-01-01' GROUP BY strftime('%m', name)", new Object[]{});
-        while(e.moveToNext()) {
-            doses = e.getShort(0);
-            S = doses + S;
-            tabYear[0] = S;
-        }
-    }
-
-    public void testYear() {
-        for(int i = 0; i<tabYear.length; i++)
-        {
-            tabYear[i] = 0;
-        }
-        android.database.Cursor d = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%Y'" +//%H formateur pour indiquer l'heure Ex: %m pour mois
-                ", name) FROM users WHERE date(name, 'start of year')" +//start of day ex: start of month
-                " = '2018-01-01' GROUP BY strftime('%Y', name)", new Object[]{});
-        while(d.moveToNext()) {
-            tabYear[Integer.parseInt(d.getString(1))] = d.getShort(0);
         }
     }
 
@@ -640,7 +654,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public String LoadFile() {
 
-        String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + "test.txt";
+        String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + FILE_NAME_ONE;
         File file = new File(path);
         StringBuilder sb = new StringBuilder();
 
@@ -692,6 +706,77 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
+    }
+
+    public void CreateFile(String s) {
+
+        String text = s;
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME_TWO, MODE_PRIVATE);
+            fos.write(text.getBytes());
+            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME_TWO, Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public String ReadFile()
+    {
+        String path = getFilesDir() + "/" + FILE_NAME_TWO;
+        File file = new File(path);
+        StringBuilder pers = new StringBuilder();
+
+        if (file.isFile() && file.getPath().endsWith(".txt")) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                int i = 0;
+                while ((line = br.readLine()) != null) {
+                    pers.append(line);
+                    moreTest[i] = line;
+                    i++;
+                }
+                waitingText = pers.toString();
+                br.close();
+                file.delete();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            pers.append("200");
+        }
+        return pers.toString();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        CreateFile(doses);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String pers = ReadFile();
+        doses = pers;
+        show.setText(doses);
     }
 
     public int convertDoses() {
@@ -779,7 +864,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected Double doInBackground(Void... voids) {
 
-            String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + "test.txt";
+            String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + FILE_NAME_ONE;
             fileTask = new File(path);
 
             return null;
@@ -799,7 +884,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         graph = findViewById(R.id.graph);
         buttonDay = findViewById(R.id.button_day);
         buttonMonth = findViewById(R.id.button_month);
-        buttonYear = findViewById(R.id.button_year);
 
         buttonDay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -831,23 +915,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
-        buttonYear.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                try {
-
-                    graph.removeAllSeries();
-                    graph.addSeries(SeriesYear);
-                    graph.getLegendRenderer().setVisible(true);
-
-                } catch (NullPointerException e) {
-
-                }
-            }
-        });
-
     }
 
     @Override

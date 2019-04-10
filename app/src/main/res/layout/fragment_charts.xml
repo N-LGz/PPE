@@ -54,13 +54,6 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:layout_marginTop="10dp"/>
 
-            <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Années précédentes"
-                    android:id="@+id/button_year"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:layout_marginTop="10dp"/>
         </RadioGroup>
 
     </LinearLayout>
