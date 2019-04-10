@@ -37,9 +37,10 @@ public class LoginActivity extends AppCompatActivity {
             data.moveToFirst();
             do {
                 name_user = data.getString(1);
-                password_user = data.getString(2);
+                password_user = data.getString(5);
                 if (name_log.getText().toString().equals(name_user) && password_log.getText().toString().equals(password_user)) {
                     Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                    main.putExtra("name", name_user);
                     startActivity(main);
                     Toast.makeText(LoginActivity.this, "Welcome, " + name_log.getText().toString() + "!", Toast.LENGTH_LONG).show();
                 }

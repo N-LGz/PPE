@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String doses = "";
     String file = "";
 
+    String username = "";
+
     String waitingText;
     String[] moreTest = new String[5];
 
@@ -119,24 +121,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Intent intent = getIntent();
         if (intent != null){
-            if (intent.hasExtra("doses") && intent.hasExtra("date") ){
-                str = intent.getStringExtra("doses");
-                date = intent.getStringExtra ("date");
+            if (intent.hasExtra("name") ){
+                username = intent.getStringExtra("name");
             }
         }
     }
 
-    /*
-    public String[] KeepDate(String date[])
-    {
-        String date_convert[] = {"","",""};
-        for(int i=0; i<date.length-1; i++)
-        {
 
-        }
+    public String KeepDate(String date)
+    {
+        String date_convert = "";
+        String parts[] = date.split(" ");
+        date_convert = parts[0];
         return date_convert;
     }
-    */
+
 
     public void Dose()
     {
@@ -147,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             SaveFile(file);
             date = convertDate();
             doses = String.valueOf(convertDoses());
+            date_convertie = KeepDate(date);
 
             //2ème étape: ajout de la date à la BDD
             AddToBDD();
@@ -454,6 +454,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
                 Intent intentProfile = new Intent(this, ProfileActivity.class);
+                intentProfile.putExtra("name", username);
                 startActivity(intentProfile);
                 break;
             case R.id.nav_tutorial:
@@ -551,7 +552,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             tabDay[i] = 0;
         }
-        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H', name) FROM users WHERE date(name, 'start of day') = '2019-02-11' GROUP BY strftime('%H', name)", new Object[]{});
+        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H', name) FROM users WHERE date(name, 'start of day') = '"+date_convertie+"' GROUP BY strftime('%H', name)", new Object[]{});
         while(c.moveToNext()) {
             tabDay[Integer.parseInt(c.getString(1))] = c.getShort(0);
         }

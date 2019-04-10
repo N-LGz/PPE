@@ -27,26 +27,22 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(android.database.sqlite.SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_USERS + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, FIRSTNAME TEXT, AGE INT, MAIL TEXT, PASSWORD TEXT) ");
+        db.execSQL("CREATE TABLE " + TABLE_USERS + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, FIRSTNAME TEXT, AGE TEXT, MAIL TEXT, PASSWORD TEXT) ");
     }
 
     @Override
     public void onUpgrade(android.database.sqlite.SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
-        autofillBDD();
     }
 
-    public void autofillBDD(){
-        insertNewUsers("Geoffrey", "1234");
-        insertNewUsers("Aurelio", "eternite");
-        insertNewUsers("admin", "admin" );
-    }
-
-    public boolean insertNewUsers(String name, String password){
+    public boolean insertNewUsers(String name, String firstname, String age, String mail, String password){
         android.database.sqlite.SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_NAME, name);
+        contentValues.put(COL_FIRSTNAME, firstname);
+        contentValues.put(COL_AGE, age);
+        contentValues.put(COL_MAIL, mail);
         contentValues.put(COL_PASSWORD, password);
         long result = db.insert(TABLE_USERS, null, contentValues);
         if(result==-1){
@@ -60,7 +56,7 @@ public class SQLiteDatabasePPE extends SQLiteOpenHelper {
     public void deleteAllUsers(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE " + TABLE_USERS);
-        db.execSQL("CREATE TABLE " + TABLE_USERS + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, PASSWORD TEXT) ");
+        db.execSQL("CREATE TABLE " + TABLE_USERS + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, FIRSTNAME TEXT, AGE TEXT, MAIL TEXT, PASSWORD TEXT) ");
         db.close();
     }
 

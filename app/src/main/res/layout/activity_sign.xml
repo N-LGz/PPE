@@ -94,7 +94,7 @@
                         android:layout_marginRight="60dp"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/lastname_entry"
+                        android:id="@+id/firstname_entry"
                         android:layout_weight="1"
                         android:textAlignment="center"/>
                 <EditText

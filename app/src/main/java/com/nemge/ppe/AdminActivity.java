@@ -31,7 +31,7 @@ public class AdminActivity extends AppCompatActivity {
         ViewData();
 
         button_add = findViewById(R.id.button_add_user);
-        AddData();
+        //AddData();
 
         button_clear_all = findViewById(R.id.button_clear_data);
         clearAllData();
@@ -63,7 +63,7 @@ public class AdminActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void AddData(){
+    /*public void AddData(){
         button_add.setOnClickListener(v -> {
             boolean isInserted = db.insertNewUsers(name.getText().toString(), password.getText().toString());
             if(isInserted){
@@ -73,7 +73,7 @@ public class AdminActivity extends AppCompatActivity {
                 Toast.makeText(AdminActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
     public void clearAllData(){
         button_clear_all.setOnClickListener(v -> db.deleteAllUsers());
