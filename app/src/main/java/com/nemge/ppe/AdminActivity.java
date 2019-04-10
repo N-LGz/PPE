@@ -21,6 +21,7 @@ public class AdminActivity extends AppCompatActivity {
 
         setSupportActionBar(findViewById(R.id.home_toolbar));
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
 
         db = new SQLiteDatabasePPE(this);
         name = findViewById(R.id.enter_name2);

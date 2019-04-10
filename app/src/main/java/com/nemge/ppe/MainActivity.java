@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     String str = "";
     String date = "";
+    String date_convertie="";
     String doses = "";
     String file = "";
 
@@ -125,6 +126,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /*
+    public String[] KeepDate(String date[])
+    {
+        String date_convert[] = {"","",""};
+        for(int i=0; i<date.length-1; i++)
+        {
+
+        }
+        return date_convert;
+    }
+    */
+
     public void Dose()
     {
         try {
@@ -151,31 +164,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
             SeriesYear.setTitle("Cette année");
 
-            if(buttonDay.isChecked())
-            {
-                graph.removeAllSeries();
-                graph.addSeries(SeriesDay);
-                graph.getLegendRenderer().setVisible(true);
-            }
-
-            if(buttonMonth.isChecked())
-            {
-                graph.removeAllSeries();
-                graph.addSeries(SeriesMonth);
-                graph.getLegendRenderer().setVisible(true);
-            }
-
-            if(buttonYear.isChecked())
-            {
-                graph.removeAllSeries();
-                graph.addSeries(SeriesYear);
-                graph.getLegendRenderer().setVisible(true);
-                graph.getGridLabelRenderer().setNumHorizontalLabels(3);
-            }
-
         } catch(NullPointerException e){
             Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
         }
+
     }
 
     public int convertMonth(String[] tabFromTo) {
@@ -224,9 +216,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         return result;
+
     }
 
     private void deleteUser(User user) {
+
         Disposable disposable = (Disposable) io.reactivex.Observable.create(new ObservableOnSubscribe<Object>()
         {
             @Override
@@ -255,9 +249,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
         compositeDisposable.add(disposable);
+
     }
 
     private void updateUser(User user) {
+
         Disposable disposable = (Disposable) io.reactivex.Observable.create(new ObservableOnSubscribe<Object>()
         {
             @Override
@@ -286,6 +282,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
         compositeDisposable.add(disposable);
+
     }
 
     private void loadData() {
@@ -306,15 +303,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
         compositeDisposable.add(disposable);
+
     }
 
     private void onGetAllUserSuccess(List<User> users) {
+
         userList.clear();
         userList.addAll(users);
         adapter.notifyDataSetChanged();
+
     }
 
     private void deleteAllUsers() {
+
         Disposable disposable = (Disposable) io.reactivex.Observable.create(new ObservableOnSubscribe<Object>()
         {
             @Override
@@ -348,10 +349,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
         compositeDisposable.add(disposable);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -367,25 +370,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.update, menu);
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+
         super.onCreateContextMenu(contextMenu, view, menuInfo);
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         contextMenu.setHeaderTitle("Select action:");
         contextMenu.add(Menu.NONE, 0, Menu.NONE, "Update");
         contextMenu.add(Menu.NONE, 1, Menu.NONE, "Delete");
+
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         final User user = userList.get(info.position);
         switch (item.getItemId()) {
@@ -436,6 +445,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             break;
         }
         return true;
+
     }
 
     @Override
@@ -466,13 +476,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intentLog = new Intent(this, LoginActivity.class);
                 startActivity(intentLog);
                 break;
+            case R.id.nav_test:
+                Intent intentTest = new Intent(this, Test.class);
+                startActivity(intentTest);
+                break;
         }
         this.mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+
     }
 
     private void configureBottomView(){
+
         botView.setOnNavigationItemSelectedListener(item -> updateMainFragment(item.getItemId()));
+
     }
 
     @Override
@@ -483,19 +500,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
         super.onRestoreInstanceState(savedInstanceState);
         // Restauration des données du contexte utilisateur
         show.setText(savedInstanceState.getString(str));
+
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+
         super.onSaveInstanceState(outState);
         // Sauvegarde des données du contexte utilisateur
         outState.putString(str, show.getText().toString());
+
     }
 
-    private Boolean updateMainFragment(Integer integer){
+    private Boolean updateMainFragment(Integer integer) {
+
         switch (integer) {
             case R.id.menu_doses:
                 fm.beginTransaction().hide(active).show(count).commit();
@@ -513,27 +535,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
         }
         return false;
+
     }
 
-    public void AddData(){
+    public void AddData() {
+
         testDay();
         testMonth();
         //testYear();
+
     }
 
-    public void testDay()
-    {
+    public void testDay() {
         for(int i = 0; i<tabDay.length; i++)
         {
             tabDay[i] = 0;
         }
-        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H', name) FROM users WHERE date(name, 'start of day') = '2019-03-06' GROUP BY strftime('%H', name)", new Object[]{});
+        android.database.Cursor c = UserDatabase.getInstance(this).query("SELECT count(name), strftime('%H', name) FROM users WHERE date(name, 'start of day') = '2019-02-11' GROUP BY strftime('%H', name)", new Object[]{});
         while(c.moveToNext()) {
             tabDay[Integer.parseInt(c.getString(1))] = c.getShort(0);
         }
     }
 
-    public void testMonth(){
+    public void testMonth() {
 
         int doses = 0;
         int S =0;
@@ -563,7 +587,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void testYear(){
+    public void testYear() {
         for(int i = 0; i<tabYear.length; i++)
         {
             tabYear[i] = 0;
@@ -609,7 +633,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return values;
     }
 
-    public String LoadFile(){
+    public String LoadFile() {
+
         String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + "test.txt";
         File file = new File(path);
         StringBuilder sb = new StringBuilder();
@@ -637,6 +662,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             sb.append("LUL");
         }
         return sb.toString();
+
     }
 
     public void SaveFile(String s) {
@@ -661,6 +687,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
+
     }
 
     public int convertDoses() {
@@ -728,7 +755,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else {
             query = query + Integer.toString(monthNumber) + "-";//Month
         }
-        query = query + Integer.toString(monthNumber) + "-";//Month
+        //query = query + Integer.toString(monthNumber) + "-";//Month
 
         if(arrayOfString[1].length() == 1) {
             query = query + "0" + arrayOfString[1] + " ";//Day
@@ -744,15 +771,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void AddToBDD(){
+
         Disposable disposable = (Disposable) io.reactivex.Observable.create(new ObservableOnSubscribe<Object>()
         {
             @Override
             public void subscribe(ObservableEmitter<Object> e) throws Exception
             {
                 //User user = new User("2018-03-08 10:20:45");
-                User user = new User(date);
                 userRepository.insertUser(new User(date));
-                userRepository.insertUser(user);
                 e.onComplete();
             }
         })
@@ -774,6 +800,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         loadData();//Refresh data
                     }
                 });
+
     }
 
     @Override
@@ -783,6 +810,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         buttonDay = findViewById(R.id.button_day);
         buttonMonth = findViewById(R.id.button_month);
         buttonYear = findViewById(R.id.button_year);
+
+        buttonDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+                    graph.removeAllSeries();
+                    graph.addSeries(SeriesDay);
+                    graph.getLegendRenderer().setVisible(true);
+
+                } catch(NullPointerException e)
+                {
+
+                }
+            }
+        });
+
+        buttonMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+                    graph.removeAllSeries();
+                    graph.addSeries(SeriesMonth);
+                    graph.getLegendRenderer().setVisible(true);
+
+                } catch (NullPointerException e) {
+
+                }
+            }
+        });
+
+        buttonYear.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                try {
+
+                    graph.removeAllSeries();
+                    graph.addSeries(SeriesYear);
+                    graph.getLegendRenderer().setVisible(true);
+
+                } catch (NullPointerException e) {
+
+                }
+            }
+        });
 
     }
 

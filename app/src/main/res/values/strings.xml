@@ -14,6 +14,7 @@
     <string name="nav_settings">Notifications</string>
     <string name="nav_bluetooth">Bluetooth</string>
     <string name="nav_logout">Se déconnecter</string>
+    <string name="nav_test">Test</string>
 
     <!--Main Menu-->
     <string name="home_count">Doses</string>

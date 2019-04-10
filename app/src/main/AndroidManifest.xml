@@ -18,6 +18,13 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
+        <activity android:name=".Test">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.MainActivity"
+                    android:value=".MainActivity"/>
+        </activity>
+
         <activity
                 android:name=".NotificationsActivity"
                 android:label="Notifications"
@@ -28,26 +35,26 @@
                     android:parentActivityName="com.nemge.ppe.MainActivity"
                     android:value=".MainActivity"/>
         </activity>
-
-        <activity android:name=".TutorialActivity"
-                  android:label="Tutoriel"
-                  android:launchMode="singleInstance"
-                  android:screenOrientation="portrait">
+        <activity
+                android:name=".TutorialActivity"
+                android:label="Tutoriel"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.MainActivity"
                     android:value=".MainActivity"/>
         </activity>
-        <activity android:name=".ProfileActivity"
-                  android:label="Profil"
-                  android:launchMode="singleInstance"
-                  android:screenOrientation="portrait">
+        <activity
+                android:name=".ProfileActivity"
+                android:label="Profil"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.MainActivity"
                     android:value=".MainActivity"/>
         </activity>
-
         <activity
                 android:name=".LoginActivity"
                 android:label="Se connecter"
@@ -56,7 +63,7 @@
         </activity>
         <activity
                 android:name=".SignActivity"
-                android:label="S'enregistrer"
+                android:label="S&apos;enregistrer"
                 android:launchMode="singleInstance"
                 android:screenOrientation="portrait">
             <meta-data
@@ -64,7 +71,6 @@
                     android:parentActivityName="com.nemge.ppe.LoginActivity"
                     android:value=".LoginActivity"/>
         </activity>
-
         <activity
                 android:name=".MainActivity"
                 android:label="Accueil"
@@ -76,7 +82,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
                 android:name=".BluetoothDevicesActivity"
                 android:label="Appareils"
@@ -87,12 +92,11 @@
                     android:parentActivityName="com.nemge.ppe.MainActivity"
                     android:value=".MainActivity"/>
         </activity>
-
         <activity
                 android:name=".AdminActivity"
                 android:label="Administrateur"
-                android:screenOrientation="portrait"
-                android:launchMode="singleInstance">
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.MainActivity"

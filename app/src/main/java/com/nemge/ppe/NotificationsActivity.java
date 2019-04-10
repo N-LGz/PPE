@@ -13,5 +13,6 @@ public class NotificationsActivity extends AppCompatActivity {
 
         setSupportActionBar(findViewById(R.id.home_toolbar));
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
     }
 }
