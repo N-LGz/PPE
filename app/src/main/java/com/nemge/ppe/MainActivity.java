@@ -2,6 +2,7 @@ package com.nemge.ppe;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +47,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import java.io.*;
+import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String date_convertie="";
     String doses = "";
     String file = "";
+    File fileTask;
 
     String username = "";
 
@@ -363,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 show.setText("200");
                 break;
             case R.id.nav_update:
-                Dose();
+                new Task().execute();
                 break;
             case R.id.nav_clear:
                 deleteAllUsers();
@@ -688,46 +692,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
-
     }
 
     public int convertDoses() {
 
-        String query = "";
-        int a;
         LoadFile();
-        String[] arrayOfString = moreTest[0].split(" ", 0);
-        String[] year = arrayOfString[3].split(",", 0);
-        query = query + year[0] + "-";//Year
-
-        Date date = null;//put your month name here
-        try {
-            date = new SimpleDateFormat("MMM", Locale.FRENCH).parse(arrayOfString[2]);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int monthNumber=cal.get(Calendar.MONTH);
-        if(arrayOfString[1].length() == 1) {
-            query = query + "0" + Integer.toString(monthNumber) + "-";//Month
-        }
-        else {
-            query = query + Integer.toString(monthNumber) + "-";//Month
-        }
-        query = query + Integer.toString(monthNumber) + "-";//Month
-
-        if(arrayOfString[1].length() == 1) {
-            query = query + "0" + arrayOfString[1] + " ";//Day
-        }
-        else {
-            query = query + arrayOfString[1];//Day
-        }
-        query = query + arrayOfString[4];//hh:mm:ss
-
-        //On renvoie le nombre de doses qu'il reste, envoyé par la raspberry
-
-        a = Integer.parseInt(moreTest[1]);
+        int a = Integer.parseInt(moreTest[1]);
         return a;
 
     }
@@ -750,11 +720,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int monthNumber=cal.get(Calendar.MONTH);
-        if(arrayOfString[1].length() == 1) {
-            query = query + "0" + Integer.toString(monthNumber) + "-";//Month
+        String interMonth = Integer.toString(monthNumber);//A AJOUTER
+        if(interMonth.length() == 1) {
+            query = query + "0" + interMonth + "-";//Month//A CHANGER
         }
         else {
-            query = query + Integer.toString(monthNumber) + "-";//Month
+            query = query + interMonth + "-";//Month//A CHANGER
         }
         //query = query + Integer.toString(monthNumber) + "-";//Month
 
@@ -762,7 +733,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             query = query + "0" + arrayOfString[1] + " ";//Day
         }
         else {
-            query = query + arrayOfString[1];//Day
+            query = query + arrayOfString[1] + " ";//Day//A CHANGER
         }
         query = query + arrayOfString[4];//hh:mm:ss
         //On renvoit le nombre de doses qu'il reste, envoyé par la raspberry
@@ -802,6 +773,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
+    }
+
+    class Task extends AsyncTask<Void,Void,Double> {
+        @Override
+        protected Double doInBackground(Void... voids) {
+
+            String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + "test.txt";
+            fileTask = new File(path);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Double res) {
+            if (fileTask.exists()) {
+                Dose();
+            }
+        }
     }
 
     @Override
