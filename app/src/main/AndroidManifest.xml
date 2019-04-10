@@ -19,45 +19,69 @@
             tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-                android:name=".LoginActivity"
-                android:launchMode= "singleInstance">
+                android:name=".NotificationsActivity"
+                android:label="Notifications"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.MainActivity"
+                    android:value=".MainActivity"/>
+        </activity>
+
+        <activity android:name=".TutorialActivity"
+                  android:label="Tutoriel"
+                  android:launchMode="singleInstance"
+                  android:screenOrientation="portrait">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.MainActivity"
+                    android:value=".MainActivity"/>
+        </activity>
+        <activity android:name=".ProfileActivity"
+                  android:label="Profil"
+                  android:launchMode="singleInstance"
+                  android:screenOrientation="portrait">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.MainActivity"
+                    android:value=".MainActivity"/>
         </activity>
 
         <activity
-                android:name=".SignActivity">
+                android:name=".LoginActivity"
+                android:label="Se connecter"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".SignActivity"
+                android:label="S'enregistrer"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:parentActivityName="com.nemge.ppe.LoginActivity"
+                    android:value=".LoginActivity"/>
         </activity>
 
         <activity
                 android:name=".MainActivity"
-                android:label="Home"
-                android:screenOrientation="portrait"
-                android:launchMode="singleInstance">
+                android:label="Accueil"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".TestActivity"
-                  android:label="Test">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.MainActivity"
-                    android:value=".MainActivity"/>
-        </activity>
-
-        <activity
-                android:name=".TestBDD"
-                android:label="BDD">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.MainActivity"
-                    android:value=".MainActivity"/>
-        </activity>
-
         <activity
                 android:name=".BluetoothDevicesActivity"
-                android:label="Devices">
+                android:label="Appareils"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.MainActivity"
@@ -66,7 +90,9 @@
 
         <activity
                 android:name=".SettingsActivity"
-                android:label="Settings">
+                android:label="Paramètres"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.MainActivity"
@@ -75,18 +101,14 @@
 
         <activity
                 android:name=".AdminActivity"
-                android:label="Admin">
+                android:label="Administrateur"
+                android:screenOrientation="portrait"
+                android:launchMode="singleInstance">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:parentActivityName="com.nemge.ppe.SettingsActivity"
                     android:value=".SettingsActivity"/>
         </activity>
-
-        <activity android:name=".SQLiteActivity">
-        </activity>
-
-        <activity android:name=".GraphTestActivity">
-        </activity>
-
     </application>
+
 </manifest>

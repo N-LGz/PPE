@@ -54,9 +54,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
     private NavigationView navView;
     private BottomNavigationView botView;
-    private GraphView graphDay, graphMonth, graphYear;
+    private GraphView graph;
     private TextView show;
-    private Button button;
 
     String str = "";
     String date = "";
@@ -79,9 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Fragment active = count;
 
     private ListView lstUsers;
-    private FloatingActionButton fab, fabchart;
-    private TextView txtv;
-
     List<User> userList = new ArrayList<>();
     ArrayAdapter adapter;
 
@@ -128,52 +124,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void UseDose(){
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
+    public void Dose()
+    {
+        try {
 
-                    ///1ère étape: réception et traitement du fichier
-                    file = LoadFile();
-                    SaveFile(file);
-                    date = convertDate();
-                    doses = String.valueOf(convertDoses());
+            ///1ère étape: réception et traitement du fichier
+            file = LoadFile();
+            SaveFile(file);
+            date = convertDate();
+            doses = String.valueOf(convertDoses());
 
-                    //2ème étape: ajout de la date à la BDD
-                    AddToBDD();
-                    AddData();
+            //2ème étape: ajout de la date à la BDD
+            AddToBDD();
+            AddData();
 
-                    //3ème étape: mise à jour des graphes et de l'afficheur
-                    show.setText(doses);
+            //3ème étape: mise à jour des graphes et de l'afficheur
+            show.setText(doses);
 
-                    SeriesDay = new LineGraphSeries<>(generateDataDay(tabDay));
-                    SeriesDay.setTitle("Aujourd'hui");
+            SeriesDay = new LineGraphSeries<>(generateDataDay(tabDay));
+            SeriesDay.setTitle("Aujourd'hui");
 
-                    SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
-                    SeriesMonth.setTitle("Ce mois-ci");
+            SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
+            SeriesMonth.setTitle("Ce mois-ci");
 
-                    SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
-                    SeriesYear.setTitle("Cette année");
+            SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
+            SeriesYear.setTitle("Cette année");
 
-                    graphDay.removeAllSeries();
-                    graphDay.addSeries(SeriesDay);
-                    graphDay.getLegendRenderer().setVisible(true);
+          /*  graphDay.removeAllSeries();
+            graphDay.addSeries(SeriesDay);
+            graphDay.getLegendRenderer().setVisible(true);
 
-                    graphMonth.removeAllSeries();
-                    graphMonth.addSeries(SeriesMonth);
-                    graphMonth.getLegendRenderer().setVisible(true);
+            graphMonth.removeAllSeries();
+            graphMonth.addSeries(SeriesMonth);
+            graphMonth.getLegendRenderer().setVisible(true);
 
-                    graphYear.removeAllSeries();
-                    graphYear.addSeries(SeriesYear);
-                    graphYear.getLegendRenderer().setVisible(true);
-                    graphYear.getGridLabelRenderer().setNumHorizontalLabels(3);
+            graphYear.removeAllSeries();
+            graphYear.addSeries(SeriesYear);
+            graphYear.getLegendRenderer().setVisible(true);
+            graphYear.getGridLabelRenderer().setNumHorizontalLabels(3);*/
 
-                } catch(NullPointerException e){
-                    Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        } catch(NullPointerException e){
+            Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
+        }
     }
 
     public int convertMonth(String[] tabFromTo) {
@@ -221,8 +213,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, "Taille du tableau non conforme", Toast.LENGTH_SHORT).show();
             }
         }
-
-        txtv.setText(Integer.toString(result));
         return result;
     }
 
@@ -356,33 +346,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.update:
-                AddData();
-
-                SeriesDay = new LineGraphSeries<>(generateDataDay(tabDay));
-                SeriesDay.setTitle("Aujourd'hui");
-
-                SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
-                SeriesMonth.setTitle("Ce mois-ci");
-
-                SeriesYear = new BarGraphSeries<>(generateDataYear(tabYear));
-                SeriesYear.setTitle("Cette année");
-
-                //SeriesYear = new LineGraphSeries<>(generateDataYear(tabYear));
-                //SeriesYear.setTitle("Year");
-
-                graphDay.removeAllSeries();
-                graphDay.addSeries(SeriesDay);
-                graphDay.getLegendRenderer().setVisible(true);
-
-                graphMonth.removeAllSeries();
-                graphMonth.addSeries(SeriesMonth);
-                graphMonth.getLegendRenderer().setVisible(true);
-
-                graphYear.removeAllSeries();
-                graphYear.addSeries(SeriesYear);
-                graphYear.getLegendRenderer().setVisible(true);
-                graphYear.getGridLabelRenderer().setNumHorizontalLabels(3);
+            case R.id.nav_refresh:
+                show.setText("200");
+                break;
+            case R.id.nav_update:
+                Dose();
+                break;
+            case R.id.nav_clear:
+                deleteAllUsers();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -461,6 +432,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
+            case R.id.nav_profile:
+                Intent intentProfile = new Intent(this, ProfileActivity.class);
+                startActivity(intentProfile);
+                break;
+            case R.id.nav_tutorial:
+                Intent intentTutorial = new Intent(this, TutorialActivity.class);
+                startActivity(intentTutorial);
+                break;
             case R.id.nav_settings:
                 Intent intentSettings = new Intent(this, SettingsActivity.class);
                 startActivity(intentSettings);
@@ -472,17 +451,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_disconnect:
                 Intent intentLog = new Intent(this, LoginActivity.class);
                 startActivity(intentLog);
-                break;
-            case R.id.nav_test:
-                Intent intent = new Intent(this, TestActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_test_bdd:
-                Intent intentBDD = new Intent(this, TestBDD.class);
-                startActivity(intentBDD);
-                break;
-            case R.id.nav_clear:
-                deleteAllUsers();
                 break;
         }
         this.mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -684,7 +652,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public int convertDoses() {
 
         String query = "";
-        int a = 0;
+        int a;
         LoadFile();
         String[] arrayOfString = moreTest[0].split(" ", 0);
         String[] year = arrayOfString[3].split(",", 0);
@@ -794,19 +762,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
     }
 
+    @Override
     public void sendID() {
 
-        graphDay = findViewById(R.id.graphDay);
-        graphMonth = findViewById(R.id.graphMonth);
-        graphYear = findViewById(R.id.graphYear);
+        graph = findViewById(R.id.graph);
+
     }
 
+    @Override
     public void sendID2() {
 
         show = findViewById(R.id.title_count);
-        button = findViewById(R.id.button_count);
-
-        UseDose();
+        show.setText("???");
 
     }
 
@@ -814,58 +781,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void sendID3() {
 
         lstUsers = findViewById(R.id.lstUsers);
-        fab = findViewById(R.id.fab);
-        txtv = findViewById(R.id.txtv);
-        fabchart = findViewById(R.id.fabchart);
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, userList);
         registerForContextMenu(lstUsers);
         lstUsers.setAdapter(adapter);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Disposable disposable = (Disposable) io.reactivex.Observable.create(new ObservableOnSubscribe<Object>()
-                {
-                    @Override
-                    public void subscribe(ObservableEmitter<Object> e) throws Exception
-                    {
-
-                        //User user = new User("2018-03-08 10:20:45");
-                        User user = new User(date);
-                        userRepository.insertUser(new User(date));
-                        userRepository.insertUser(user);
-                        e.onComplete();
-                    }
-                })
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(new Consumer() {
-                            @Override
-                            public void accept(Object o) throws Exception {
-                                Toast.makeText(MainActivity.this, "User added !", Toast.LENGTH_SHORT).show();
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(MainActivity.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }, new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                loadData();//Refresh data
-                            }
-                        });
-            }
-        });
-
-        fabchart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String tabFromTo[] = {"2018", "04", "08", "12"};
-                int doses = convertMonth(tabFromTo);
-            }
-        });
 
     }
 }

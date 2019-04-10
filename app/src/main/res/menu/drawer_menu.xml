@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:android="http://schemas.android.com/apk/res/android">
+
     <group android:checkableBehavior="single">
+
         <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_person_black_24dp"
@@ -22,31 +24,11 @@
                 android:icon="@drawable/ic_bluetooth_black_24dp"
                 android:title="@string/nav_bluetooth"
                 app:showAsAction="never"/>
-        <item
-                android:id="@+id/nav_test"
-                android:icon="@drawable/ic_create_black_24dp"
-                android:title="@string/nav_test"
-                app:showAsAction="never"/>
-        <item
-                android:id="@+id/nav_test_bdd"
-                android:icon="@drawable/ic_data_usage_black_24dp"
-                android:title="@string/nav_test_bdd"
-                app:showAsAction="never"/>
+
         <item
                 android:id="@+id/nav_disconnect"
                 android:icon="@drawable/ic_power_settings_new_black_24dp"
                 android:title="@string/nav_logout"
-                app:showAsAction="never"/>
-        <item
-                android:id="@+id/nav_refresh"
-                android:icon="@drawable/ic_refresh_black_24dp"
-                android:title="@string/nav_refresh"
-                app:showAsAction="never"/>
-
-        <item
-                android:id="@+id/nav_clear"
-                android:icon="@drawable/ic_delete_forever_black_24dp"
-                android:title="@string/nav_clear"
                 app:showAsAction="never"/>
 
     </group>

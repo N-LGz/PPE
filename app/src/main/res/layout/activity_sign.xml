@@ -7,7 +7,8 @@
         android:layout_height="match_parent"
         tools:context=".SignActivity"
         android:orientation="vertical"
-        android:background="@color/colorPrimaryDark" android:id="@+id/main_layout">
+        android:id="@+id/main_layout">
+
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp" android:id="@+id/title_field">
@@ -16,37 +17,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <TextView
-                    android:text="Sign In"
+                    android:text="Inscription"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/textView"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:textAlignment="center"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textAlignment="center"/>
         </LinearLayout>
     </RelativeLayout>
+
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/infos_field">
+            android:layout_height="match_parent"
+            android:id="@+id/infos_field">
         <LinearLayout
                 android:layout_marginTop="100dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" android:id="@+id/personal">
+                android:layout_weight="1"
+                android:id="@+id/personal">
+
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" android:id="@+id/labels">
+                    android:layout_weight="1"
+                    android:id="@+id/labels">
                 <TextView
-                        android:text="Name"
+                        android:text="Nom"
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/name_sign"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/name_sign"
                         android:layout_weight="1"
                         android:textAlignment="center"/>
                 <TextView
-                        android:text="Last Name"
+                        android:text="Prénom"
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -62,39 +70,53 @@
                         android:layout_weight="1"
                         android:textAlignment="center"/>
             </LinearLayout>
+
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" android:id="@+id/form">
+                    android:layout_weight="1"
+                    android:id="@+id/form">
                 <EditText
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="60dp"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/name_entry" android:layout_weight="1" android:textAlignment="center"/>
+                        android:id="@+id/name_entry"
+                        android:layout_weight="1"
+                        android:textAlignment="center"/>
                 <EditText
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="60dp"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/lastname_entry" android:layout_weight="1" android:textAlignment="center"/>
+                        android:id="@+id/lastname_entry"
+                        android:layout_weight="1"
+                        android:textAlignment="center"/>
                 <EditText
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="60dp"
                         android:inputType="numberSigned"
                         android:ems="10"
-                        android:id="@+id/age_entry" android:layout_weight="1" android:textAlignment="center"/>
+                        android:id="@+id/age_entry"
+                        android:layout_weight="1"
+                        android:textAlignment="center"/>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
                 android:layout_marginTop="100dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/register">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/register">
             <EditText
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
@@ -116,15 +138,17 @@
                     android:inputType="textPassword"
                     android:ems="10"
                     android:id="@+id/password_sign"
-                    android:hint="Password"
+                    android:hint="Mot de passe"
                     android:textAlignment="center"/>
             <Button
-                    android:text="GO"
+                    android:text="VALIDER"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:id="@+id/signup_button" style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+                    android:id="@+id/signup_button"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

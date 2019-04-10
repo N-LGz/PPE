@@ -6,8 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".LoginActivity"
-        android:orientation="vertical"
-        android:background="@color/colorPrimaryDark">
+        android:orientation="vertical">
+
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="200dp">
@@ -23,8 +23,9 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Display2"/>
         </LinearLayout>
     </RelativeLayout>
+
     <EditText
-            android:hint="@string/name_login"
+            android:hint="NOM"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/borders"
@@ -35,8 +36,9 @@
             android:id="@+id/name_login"
             android:singleLine="false"
             android:selectAllOnFocus="false"/>
+
     <EditText
-            android:hint="@string/password_login"
+            android:hint="MOT DE PASSE"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/borders"
@@ -47,21 +49,24 @@
             android:id="@+id/password_login"
             android:selectAllOnFocus="false"
             android:singleLine="false"/>
+
     <Button
-        android:text="@string/button_login"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/button_login"
-        android:clickable="true"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+            android:text="Se Connecter"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/button_login"
+            android:clickable="true"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
     <Button
-            android:text="Sign Up"
+            android:text="S'enregistrer"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_sign"
             android:layout_marginTop="20dp"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
 </LinearLayout>

@@ -3,8 +3,21 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/update"
+        android:id="@+id/nav_update"
         android:title="Update"
-        app:showAsAction="never"/>
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_system_update_alt_white_24dp"/>
+
+    <item
+            android:id="@+id/nav_refresh"
+            android:icon="@drawable/ic_refresh_white_24dp"
+            android:title="Refresh"
+            app:showAsAction="ifRoom"/>
+
+    <item
+            android:id="@+id/nav_clear"
+            android:icon="@drawable/ic_clear_all_white_24dp"
+            android:title="@string/nav_clear"
+            app:showAsAction="ifRoom"/>
 
 </menu>
