@@ -24,14 +24,9 @@ public class AdminActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
 
         db = new SQLite(this);
-        name = findViewById(R.id.enter_name2);
-        password = findViewById(R.id.enter_password1);
 
         button_view_all = findViewById(R.id.button_view_data);
         ViewData();
-
-        button_add = findViewById(R.id.button_add_user);
-        //AddData();
 
         button_clear_all = findViewById(R.id.button_clear_data);
         clearAllData();
@@ -65,18 +60,6 @@ public class AdminActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.show();
     }
-
-    /*public void AddData(){
-        button_add.setOnClickListener(v -> {
-            boolean isInserted = db.insertNewUsers(name.getText().toString(), password.getText().toString());
-            if(isInserted){
-                Toast.makeText(AdminActivity.this, "Data is inserted sucessfully", Toast.LENGTH_LONG).show();
-            }
-            else{
-                Toast.makeText(AdminActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
-            }
-        });
-    }*/
 
     public void clearAllData(){
         button_clear_all.setOnClickListener(v -> db.deleteAllUsers());

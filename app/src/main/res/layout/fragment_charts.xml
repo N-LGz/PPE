@@ -49,6 +49,15 @@
             <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Ce mois-ci"
+                    android:id="@+id/button_week"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:layout_marginTop="10dp"/>
+
+
+            <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Cette année"
                     android:id="@+id/button_month"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"

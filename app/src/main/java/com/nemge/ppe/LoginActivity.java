@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent main = new Intent(LoginActivity.this, MainActivity.class);
                     main.putExtra("name", name_log.getText().toString());
                     startActivity(main);
-                    Toast.makeText(LoginActivity.this, "Welcome, " + name_log.getText().toString() + "!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Bienvenue, " + name_log.getText().toString() + "!", Toast.LENGTH_LONG).show();
                 }
             }while(data.moveToNext());
         });

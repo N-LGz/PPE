@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView botView;
     private GraphView graph;
     private TextView show;
-    private RadioButton buttonDay, buttonMonth;
+    private RadioButton buttonDay, buttonWeek, buttonMonth;
 
     String str = "";
     String date = "";
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     File fileTask;
 
     String username = "";
+    String register = "";
 
     String CHANNEL_ID = "Bron'Connect";
 
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     int tabDay[] = new int[24];
     int tabMonth[] = new int[12];
+    int tabAvril[] = {2,3,4,1,5,3,0,0,4,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
     private static final String FILE_NAME_ONE = "test.txt";
     private static final String FILE_NAME_TWO = "off.txt";
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
 
-    private LineGraphSeries SeriesDay, SeriesMonth;
+    private LineGraphSeries SeriesDay, SeriesWeek, SeriesMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,13 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         UserDatabase userDatabase = UserDatabase.getInstance(this);//Create database
         userRepository = UserRepository.getInstance(UserDataSource.getInstance(userDatabase.userDAO()));
-
-        Intent intent = getIntent();
-        if (intent != null){
-            if (intent.hasExtra("name") ){
-                username = intent.getStringExtra("name");
-            }
-        }
     }
 
     private void createNotificationChannel() {
@@ -152,6 +147,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    public DataPoint[] SaveSeries(DataPoint[] series)
+    {
+        return series;
     }
 
 
@@ -206,11 +206,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             SeriesDay = new LineGraphSeries<>(generateDataDay(tabDay));
             SeriesDay.setTitle("Aujourd'hui");
 
+            SeriesWeek = new LineGraphSeries<>(generateDataWeek(tabAvril));
+            SeriesWeek.setTitle("Ce mois_ci");
+
             SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
             SeriesMonth.setTitle("Cette année");
 
         } catch(NullPointerException e){
-            Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -508,14 +511,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intentProfile.putExtra("name", username);
                 startActivity(intentProfile);
                 break;
-            case R.id.nav_tutorial:
-                Intent intentTutorial = new Intent(this, TutorialActivity.class);
-                startActivity(intentTutorial);
-                break;
-            case R.id.nav_bluetooth:
-                Intent intentBT = new Intent(this, BluetoothDevicesActivity.class);
-                startActivity(intentBT);
-                break;
             case R.id.nav_admin:
                 Intent intentAdmin = new Intent(this, AdminActivity.class);
                 startActivity(intentAdmin);
@@ -654,8 +649,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return values;
     }
 
-    private DataPoint[] generateDataYear(int[] tab) {
-        int count = 2;
+    private DataPoint[] generateDataWeek(int[] tab) {
+        int count = 31;
         DataPoint[] values = new DataPoint[count];
         for (int i=0; i<count; i++) {
             double y = tab[i];
@@ -705,7 +700,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             fos = openFileOutput(FILE_NAME_ONE, MODE_PRIVATE);
             fos.write(text.getBytes());
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME_ONE, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME_ONE, Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -729,7 +724,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             fos = openFileOutput(FILE_NAME_TWO, MODE_PRIVATE);
             fos.write(text.getBytes());
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME_TWO, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME_TWO, Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -781,6 +776,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onPause();
 
         CreateFile(doses);
+
     }
 
     @Override
@@ -790,6 +786,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String pers = ReadFile();
         doses = pers;
         show.setText(doses);
+
     }
 
     public int convertDoses() {
@@ -896,6 +893,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         graph = findViewById(R.id.graph);
         buttonDay = findViewById(R.id.button_day);
+        buttonWeek = findViewById(R.id.button_week);
         buttonMonth = findViewById(R.id.button_month);
 
         buttonDay.setOnClickListener(new View.OnClickListener() {
@@ -906,11 +904,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     graph.removeAllSeries();
                     graph.addSeries(SeriesDay);
                     graph.getLegendRenderer().setVisible(true);
+                    graph.getViewport().setScrollable(true);
+                    graph.getViewport().setScalable(true);
+                    graph.getViewport().setScalableY(true);
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    graph.getViewport().setMinX(1);
+                    graph.getViewport().setMaxX(24);
+
 
                 } catch(NullPointerException e)
                 {
 
                 }
+            }
+        });
+
+        buttonWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+
+                    graph.removeAllSeries();
+                    graph.addSeries(SeriesWeek);
+                    graph.getLegendRenderer().setVisible(true);
+                    graph.getViewport().setScrollable(true);
+                    graph.getViewport().setScalable(true);
+                    graph.getViewport().setScalableY(true);
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    graph.getViewport().setMinX(1);
+                    graph.getViewport().setMaxX(24);
+
+
+                } catch(NullPointerException e)
+                {
+
+                }
+
             }
         });
 
@@ -922,6 +952,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     graph.removeAllSeries();
                     graph.addSeries(SeriesMonth);
                     graph.getLegendRenderer().setVisible(true);
+                    graph.getViewport().setScrollable(true);
+                    graph.getViewport().setScrollableY(true);
+                    graph.getViewport().setScalable(true);
+                    graph.getViewport().setScalableY(true);
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    graph.getViewport().setMinX(1);
+                    graph.getViewport().setMaxX(12);
 
                 } catch (NullPointerException e) {
 
@@ -934,7 +971,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void sendID2() {
 
         show = findViewById(R.id.title_count);
-        show.setText("???");
+
+        Intent intent = getIntent();
+        if (intent != null){
+            if (intent.hasExtra("name")){
+                username = intent.getStringExtra("name");
+            }
+            if(intent.hasExtra("register")){
+                show.setText("200");
+                username = intent.getStringExtra("register");
+            }
+        }
 
     }
 

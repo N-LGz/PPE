@@ -1,6 +1,7 @@
 package com.nemge.ppe;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -36,7 +37,11 @@ public class SignActivity extends AppCompatActivity {
                 boolean isInserted = db.insertNewUsers(name.getText().toString(), firstname.getText().toString(), age.getText().toString(),mail.getText().toString(), password.getText().toString());
                 if(isInserted){
                     Toast.makeText(SignActivity.this, "Votre compte a été crée avec succès !", Toast.LENGTH_LONG).show();
+                    Cursor data = db.getAllUsers();
+                    data.moveToLast();
+                    String register = data.getString(1);
                     Intent sub = new Intent(this, MainActivity.class);
+                    sub.putExtra("register", register);
                     startActivity(sub);
                 }
                 else{

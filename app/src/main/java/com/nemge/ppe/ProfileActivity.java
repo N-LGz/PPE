@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -13,6 +14,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView name, firstname, age, mail;
 
     String username = "";
+    String register = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null){
-            if (intent.hasExtra("name") ){
+            if (intent.hasExtra("name")){
                 username = intent.getStringExtra("name");
                 ViewData(username);
             }

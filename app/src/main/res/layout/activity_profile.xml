@@ -36,34 +36,67 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
             <TextView
-                    android:text="NAME"
+                    android:text="Nom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/name_user"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textAlignment="center"/>
+            <View
+                    android:id="@+id/divider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+            />
             <TextView
-                    android:text="FIRSTNAME"
+                    android:text="Prénom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
                     android:id="@+id/firstname_user"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textAlignment="center"/>
+            <View
+                    android:id="@+id/divider7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+            />
             <TextView
-                    android:text="AGE"
+                    android:text="Age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
                     android:id="@+id/age_user"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textAlignment="center"/>
+            <View
+                    android:id="@+id/divider8"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+            />
             <TextView
-                    android:text="E-MAIL"
+                    android:text="E-mail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
                     android:id="@+id/mail_user"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textAlignment="center"/>
+            <View
+                    android:id="@+id/divider9"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+            />
         </LinearLayout>
+        <View
+                android:id="@+id/divider15"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider"
+        />
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -75,24 +108,51 @@
                     android:id="@+id/name_bdd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textAlignment="center"/>
+            <View
+                    android:id="@+id/divider11"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+            />
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
                     android:id="@+id/firstname_bdd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textAlignment="center"/>
+            <View
+                    android:id="@+id/divider12"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+            />
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
                     android:id="@+id/age_bdd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textAlignment="center"/>
+            <View
+                    android:id="@+id/divider13"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+            />
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
                     android:id="@+id/mail_bdd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textAlignment="center"/>
+            <View
+                    android:id="@+id/divider14"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+            />
         </LinearLayout>
     </LinearLayout>
 

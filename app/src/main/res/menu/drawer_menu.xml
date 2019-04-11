@@ -9,17 +9,6 @@
                 android:icon="@drawable/ic_person_black_24dp"
                 android:title="@string/nav_profile"
                 app:showAsAction="never"/>
-        <item
-                android:id="@+id/nav_tutorial"
-                android:icon="@drawable/ic_build_black_24dp"
-                android:title="@string/nav_tutorial"
-                app:showAsAction="never"/>
-
-        <item
-                android:id="@+id/nav_bluetooth"
-                android:icon="@drawable/ic_bluetooth_black_24dp"
-                android:title="@string/nav_bluetooth"
-                app:showAsAction="never"/>
 
         <item
                 android:id="@+id/nav_admin"
