@@ -63,7 +63,7 @@ public class SignActivity extends AppCompatActivity {
                         Toast.makeText(SignActivity.this, "Problème lors de l'inscription", Toast.LENGTH_LONG).show();
                     }
                 }
-                
+
             }catch(NullPointerException e)
             {
 

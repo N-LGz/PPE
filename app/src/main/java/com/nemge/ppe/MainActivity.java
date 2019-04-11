@@ -71,12 +71,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String date_convertie="";
     String doses = "";
     String file = "";
-    File fileTask;
+    File fileTask, fileTask2;
 
     String username = "";
-    String register = "";
 
     String CHANNEL_ID = "Bron'Connect";
+
+    ArrayList<String> arrayDate = new ArrayList<String>();
+    ArrayList<String> arrayDose = new ArrayList<String>();
+    int i = 0;
 
     String waitingText;
     String[] moreTest = new String[5];
@@ -85,13 +88,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int tabMonth[] = new int[12];
     int tabAvril[] = {2,3,4,1,5,3,0,0,4,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-    private static final String FILE_NAME_ONE = "deco.txt";
+    private LineGraphSeries SeriesDay, SeriesWeek, SeriesMonth;
+
+    private static final String FILE_NAME_ONE = "test.txt";
+    private static final String FILE_NAME_2 = "offline.txt";
     private static final String FILE_NAME_TWO = "off.txt";
 
+    final FragmentManager fm = getSupportFragmentManager();
     private final CountFragment count = new CountFragment();;
     private final ChartsFragment charts = new ChartsFragment();
     private final BDDFragment bdd = new BDDFragment();
-    final FragmentManager fm = getSupportFragmentManager();
     Fragment active = count;
 
     private ListView lstUsers;
@@ -100,8 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
-
-    private LineGraphSeries SeriesDay, SeriesWeek, SeriesMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,27 +137,126 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userRepository = UserRepository.getInstance(UserDataSource.getInstance(userDatabase.userDAO()));
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+    public void convertHub() {
+
+        load();
+        int dose = 0;
+        ArrayList<String> arrayQuery = new ArrayList<String>();
+
+        for (int j = 0; j<arrayDose.size(); j++){
+            dose = Integer.parseInt(arrayDose.get(j));
+            arrayQuery.add(convertDate2(arrayDate.get(j)));
+        }
+
+        try {
+            date = arrayQuery.get(arrayQuery.size()-1);
+            doses = String.valueOf(dose);
+            show.setText(doses);
+        } catch (ArrayIndexOutOfBoundsException e)
+        {
+
+        }
+
+    }
+
+    public void save(String s) {
+        String text = s;
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME_2, MODE_PRIVATE);
+            fos.write(text.getBytes());
+            Toast.makeText(this,"Saved to " + getFilesDir() + "/" + FILE_NAME_2, Toast.LENGTH_LONG ).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    public DataPoint[] SaveSeries(DataPoint[] series)
-    {
-        return series;
+    public String load() {
+        FileInputStream fis = null;
+        String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + FILE_NAME_2;
+        File file = new File(path);
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String text;
+            i = 0;
+
+            while ((text = br.readLine()) != null) {
+                sb.append(text).append("\n");
+                if (i%2 == 0){
+                    arrayDate.add(text);
+                }
+                else {
+                    arrayDose.add(text);
+                }
+                i++;
+            }
+            file.delete();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
     }
 
+    public String convertDate2(String date) {
+
+        String query = "";
+        String[] arrayOfString = date.split(" ", 0);
+        String[] year = arrayOfString[3].split(",", 0);
+        query = query + year[0] + "-";//Year
+
+        Date month = null;//put your month name here
+        try {
+            month = new SimpleDateFormat("MMM", Locale.FRENCH).parse(arrayOfString[2]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(month);
+        int monthNumber=cal.get(Calendar.MONTH);
+        String interMonth = Integer.toString(monthNumber);//A AJOUTER
+        if(interMonth.length() == 1) {
+            query = query + "0" + interMonth + "-";//Month//A CHANGER
+        }
+        else {
+            query = query + interMonth + "-";//Month//A CHANGER
+        }
+        //query = query + Integer.toString(monthNumber) + "-";//Month
+
+        if(arrayOfString[1].length() == 1) {
+            query = query + "0" + arrayOfString[1] + " ";//Day
+        }
+        else {
+            query = query + arrayOfString[1] + " ";//Day//A CHANGER
+        }
+        query = query + arrayOfString[4];//hh:mm:ss
+
+        return query;
+    }
 
     public String KeepDate(String date)
     {
@@ -161,6 +264,92 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String parts[] = date.split(" ");
         date_convert = parts[0];
         return date_convert;
+    }
+
+    public void AddToBDD2(){
+
+        Disposable disposable = (Disposable) io.reactivex.Observable.create(new ObservableOnSubscribe<Object>()
+        {
+            @Override
+            public void subscribe(ObservableEmitter<Object> e) throws Exception
+            {
+                for(int i = 0; i<arrayDate.size()-1; i++)
+                {
+                    userRepository.insertUser(new User(convertDate2(arrayDate.get(i))));
+                    e.onComplete();
+                }
+            }
+        })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        Toast.makeText(MainActivity.this, "User added !", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Toast.makeText(MainActivity.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        loadData();//Refresh data
+                    }
+                });
+
+    }
+
+    public void UseADoseOffline()
+    {
+        try
+        {
+            ///1ère étape: réception et traitement du fichier
+            file = load();
+            save(file);
+            convertHub();
+            date_convertie = KeepDate(date);
+
+            //2ème étape: ajout de la date à la BDD
+            AddToBDD2();
+            AddData();
+
+            //3ème étape: mise à jour des graphes
+            if(Integer.parseInt(doses)<4)
+            {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_info_black_24dp)
+                        .setContentTitle("ATTENTION")
+                        .setContentText("Il ne vous reste que " + doses + " doses. Pensez à changer de bonbonne.")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+                // notificationId is a unique int for each notification that you must define
+                notificationManager.notify(0, builder.build());
+
+            }
+
+            SeriesDay = new LineGraphSeries<>(generateDataDay(tabDay));
+            SeriesDay.setTitle("Aujourd'hui");
+
+            SeriesWeek = new LineGraphSeries<>(generateDataWeek(tabAvril));
+            SeriesWeek.setTitle("Ce mois_ci");
+
+            SeriesMonth = new LineGraphSeries<>(generateDataMonth(tabMonth));
+            SeriesMonth.setTitle("Cette année");
+        }
+        catch(NullPointerException e)
+        {
+            //Toast.makeText(MainActivity.this, "ERROR : no file found!", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -265,6 +454,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return result;
 
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void deleteUser(User user) {
@@ -411,7 +616,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 show.setText("200");
                 break;
             case R.id.nav_update:
-                new Task().execute();
+                new Task1().execute();
+                new Task2().execute();
                 break;
             case R.id.nav_clear:
                 deleteAllUsers();
@@ -766,7 +972,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         else {
-            pers.append("200");
+            pers.append(" ");
         }
         return pers.toString();
     }
@@ -798,43 +1004,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public String convertDate() {
-
         String query = "";
-        int a = 0;
-        LoadFile();
-        String[] arrayOfString = moreTest[0].split(" ", 0);
-        String[] year = arrayOfString[3].split(",", 0);
-        query = query + year[0] + "-";//Year
-
-        Date date = null;//put your month name here
         try {
-            date = new SimpleDateFormat("MMM", Locale.FRENCH).parse(arrayOfString[2]);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int monthNumber=cal.get(Calendar.MONTH);
-        String interMonth = Integer.toString(monthNumber);//A AJOUTER
-        if(interMonth.length() == 1) {
-            query = query + "0" + interMonth + "-";//Month//A CHANGER
-        }
-        else {
-            query = query + interMonth + "-";//Month//A CHANGER
-        }
-        //query = query + Integer.toString(monthNumber) + "-";//Month
 
-        if(arrayOfString[1].length() == 1) {
-            query = query + "0" + arrayOfString[1] + " ";//Day
-        }
-        else {
-            query = query + arrayOfString[1] + " ";//Day//A CHANGER
-        }
-        query = query + arrayOfString[4];//hh:mm:ss
-        //On renvoit le nombre de doses qu'il reste, envoyé par la raspberry
-        a = Integer.parseInt(moreTest[1]);
+            int a = 0;
+            LoadFile();
+            String[] arrayOfString = moreTest[0].split(" ", 0);
+            String[] year = arrayOfString[3].split(",", 0);
+            query = query + year[0] + "-";//Year
+
+            Date date = null;//put your month name here
+            try {
+                date = new SimpleDateFormat("MMM", Locale.FRENCH).parse(arrayOfString[2]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int monthNumber=cal.get(Calendar.MONTH);
+            String interMonth = Integer.toString(monthNumber);//A AJOUTER
+            if(interMonth.length() == 1) {
+                query = query + "0" + interMonth + "-";//Month//A CHANGER
+            }
+            else {
+                query = query + interMonth + "-";//Month//A CHANGER
+            }
+            //query = query + Integer.toString(monthNumber) + "-";//Month
+
+            if(arrayOfString[1].length() == 1) {
+                query = query + "0" + arrayOfString[1] + " ";//Day
+            }
+            else {
+                query = query + arrayOfString[1] + " ";//Day//A CHANGER
+            }
+            query = query + arrayOfString[4];//hh:mm:ss
+            //On renvoit le nombre de doses qu'il reste, envoyé par la raspberry
+            a = Integer.parseInt(moreTest[1]);
+
+        } catch(ArrayIndexOutOfBoundsException e){}
         return query;
-
     }
 
     public void AddToBDD(){
@@ -870,7 +1078,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    class Task extends AsyncTask<Void,Void,Double> {
+    class Task1 extends AsyncTask<Void,Void,Double> {
         @Override
         protected Double doInBackground(Void... voids) {
 
@@ -884,6 +1092,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected void onPostExecute(Double res) {
             if (fileTask.exists()) {
                 Dose();
+            }
+        }
+    }
+
+    class Task2 extends AsyncTask<Void,Void,Double> {
+        @Override
+        protected Double doInBackground(Void... voids) {
+
+            String path2 = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + FILE_NAME_2;
+            fileTask2 = new File(path2);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Double res) {
+            if (fileTask2.exists()) {
+                UseADoseOffline();
             }
         }
     }

@@ -75,8 +75,14 @@ public class Test extends AppCompatActivity {
             arrayQuery.add(convertDate(arrayDate.get(j)));
         }
 
-        original.setText(String.valueOf(dose));
-        changed.setText(arrayQuery.get(arrayQuery.size()-1));
+        try {
+            original.setText(String.valueOf(dose));
+            changed.setText(arrayQuery.get(arrayQuery.size()-1));
+        } catch (ArrayIndexOutOfBoundsException e)
+        {
+
+        }
+
 
         /*original.setText(String.valueOf(i/2));
         changed.setText(String.valueOf(arrayDate.size()));
@@ -111,11 +117,13 @@ public class Test extends AppCompatActivity {
 
     public void load(View view) {
         FileInputStream fis = null;
+        String path = Environment.getExternalStorageDirectory().toString()+"/bluetooth"+ File.separator + FILE_NAME_ONE;
+        File file = new File(path);
 
         try {
-            fis = openFileInput(FILE_NAME_ONE);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
+            /*fis = openFileInput(FILE_NAME_ONE);
+            InputStreamReader isr = new InputStreamReader(fis);*/
+            BufferedReader br = new BufferedReader(new FileReader(file));
             StringBuilder sb = new StringBuilder();
             String text;
             i = 0;
