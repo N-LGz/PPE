@@ -72,7 +72,23 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnconvert"
             android:hint="Convert"
-            android:onClick="convert"
+            android:onClick="convertHub"
+            android:paddingVertical="30dp"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnload"
+            android:hint="Load"
+            android:onClick="load"
+            android:paddingVertical="30dp"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnsave"
+            android:hint="Save"
+            android:onClick="save"
             android:paddingVertical="30dp"/>
 
    </LinearLayout>
