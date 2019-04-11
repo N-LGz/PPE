@@ -495,6 +495,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void SignOut()
+    {
+        Intent intentLog = new Intent(this, LoginActivity.class);
+        startActivity(intentLog);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -521,8 +527,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intentAdmin);
                 break;
             case R.id.nav_disconnect:
-                Intent intentLog = new Intent(this, LoginActivity.class);
-                startActivity(intentLog);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.dialog_message)
+                        .setTitle(R.string.dialog_title);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SignOut();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
             case R.id.nav_test:
                 Intent intentTest = new Intent(this, Test.class);

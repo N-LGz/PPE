@@ -25,4 +25,13 @@
     <string name="channel_name">ATTENTION</string>
     <string name="channel_description">Il faut changer la bonbonne!</string>
 
+    <!--Alert Dialog-->
+    <string name="dialog_message">Voulez-vous vraiment vous déconnecter?</string>
+    <string name="dialog_title">ATTENTION</string>
+    <string name="ok">OUI</string>
+    <string name="cancel">NON</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
