@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class SignActivity extends AppCompatActivity {
 
-    SQLiteDatabasePPE db;
+    SQLite db;
     EditText name, firstname, age, mail, password;
     Button register;
 
@@ -18,7 +18,7 @@ public class SignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
 
-        db = new SQLiteDatabasePPE(this);
+        db = new SQLite(this);
 
         name = findViewById(R.id.name_entry);
         firstname = findViewById(R.id.firstname_entry);

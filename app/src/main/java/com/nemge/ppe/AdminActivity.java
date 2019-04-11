@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AdminActivity extends AppCompatActivity {
-    SQLiteDatabasePPE db;
+    SQLite db;
     EditText name, password;
     Button button_view_all, button_clear_all, button_add, button_del;
 
@@ -23,7 +23,7 @@ public class AdminActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
 
-        db = new SQLiteDatabasePPE(this);
+        db = new SQLite(this);
         name = findViewById(R.id.enter_name2);
         password = findViewById(R.id.enter_password1);
 
@@ -48,7 +48,10 @@ public class AdminActivity extends AppCompatActivity {
                 while(data.moveToNext()){
                     buffer.append("ID : " + data.getString(0)+ "\n ");
                     buffer.append("NAME : " + data.getString(1)+ "\n ");
-                    buffer.append("PASSWORD : " + data.getString(2)+ "\n ");
+                    buffer.append("FIRSTNAME : " + data.getString(2)+ "\n ");
+                    buffer.append("AGE : " + data.getString(3)+ "\n ");
+                    buffer.append("EMAIL : " + data.getString(4)+ "\n ");
+                    buffer.append("PASSWORD : " + data.getString(5)+ "\n ");
                 }
                 showMessage("Data", buffer.toString());
             }

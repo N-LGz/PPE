@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    SQLiteDatabasePPE db;
+    SQLite db;
     TextView name, firstname, age, mail;
 
     String username = "";
@@ -23,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
 
-        db = new SQLiteDatabasePPE(this);
+        db = new SQLite(this);
 
         name = findViewById(R.id.name_bdd);
         firstname = findViewById(R.id.firstname_bdd);
@@ -41,16 +41,22 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void ViewData(String iname)
     {
-        Cursor data = db.getUser(iname);
+        String entryname = "";
+        Cursor data = db.getAllUsers();
+        data.moveToFirst();
         if(data.getCount()==0){
             return;
         }
-        else
+        do
         {
-            name.setText(data.getString(1));
-            firstname.setText(data.getString(2));
-            age.setText(data.getString(3));
-            mail.setText(data.getString(4));
-        }
+            entryname = data.getString(1);
+            if(entryname.equals(iname))
+            {
+                name.setText(data.getString(1));
+                firstname.setText(data.getString(2));
+                age.setText(data.getString(3));
+                mail.setText(data.getString(4));
+            }
+        } while(data.moveToNext());
     }
 }

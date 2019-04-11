@@ -33,48 +33,66 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
             <TextView
                     android:text="NAME"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/name_user"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="center"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/name_user"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"/>
             <TextView
                     android:text="FIRSTNAME"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/firstname_user"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="center"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/firstname_user"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"/>
             <TextView
                     android:text="AGE"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/age_user"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="center"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/age_user"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"/>
             <TextView
                     android:text="E-MAIL"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/mail_user"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="center"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mail_user"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
             <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/name_bdd"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="center"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/name_bdd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"/>
             <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/firstname_bdd"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="center"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/firstname_bdd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"/>
             <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/age_bdd"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/age_bdd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"/>
             <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/mail_bdd"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textAlignment="center"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mail_bdd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"/>
         </LinearLayout>
     </LinearLayout>
 

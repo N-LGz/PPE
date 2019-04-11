@@ -24,7 +24,6 @@
                     android:parentActivityName="com.nemge.ppe.MainActivity"
                     android:value=".MainActivity"/>
         </activity>
-
         <activity
                 android:name=".TutorialActivity"
                 android:label="Tutoriel"
@@ -50,6 +49,11 @@
                 android:label="Se connecter"
                 android:launchMode="singleInstance"
                 android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
                 android:name=".SignActivity"
@@ -66,11 +70,6 @@
                 android:label="Accueil"
                 android:launchMode="singleInstance"
                 android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".BluetoothDevicesActivity"

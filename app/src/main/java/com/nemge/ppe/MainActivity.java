@@ -40,7 +40,6 @@ import com.nemge.ppe.Database.UserRepository;
 /*import com.nemge.ppe.Local.UserDAO;
 import com.nemge.ppe.Local.UserDAO_Impl;*/
 import com.nemge.ppe.Local.UserDAO;
-
 import com.nemge.ppe.Local.UserDataSource;
 import com.nemge.ppe.Local.UserDatabase;
 import com.nemge.ppe.Model.User;
@@ -52,7 +51,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
 import java.io.*;
 import java.net.Socket;
 import java.text.ParseException;
