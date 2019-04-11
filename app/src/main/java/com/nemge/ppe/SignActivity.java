@@ -13,6 +13,7 @@ public class SignActivity extends AppCompatActivity {
     SQLite db;
     EditText name, firstname, age, mail, password;
     Button register;
+    String recup1, recup2, recup3, recup4, recup5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,19 +35,35 @@ public class SignActivity extends AppCompatActivity {
     public void AddData(){
         register.setOnClickListener(v -> {
             try {
-                boolean isInserted = db.insertNewUsers(name.getText().toString(), firstname.getText().toString(), age.getText().toString(),mail.getText().toString(), password.getText().toString());
-                if(isInserted){
-                    Toast.makeText(SignActivity.this, "Votre compte a été crée avec succès !", Toast.LENGTH_LONG).show();
-                    Cursor data = db.getAllUsers();
-                    data.moveToLast();
-                    String register = data.getString(1);
-                    Intent sub = new Intent(this, MainActivity.class);
-                    sub.putExtra("register", register);
-                    startActivity(sub);
+
+                recup1 = name.getText().toString();
+                recup2 = firstname.getText().toString();
+                recup3 = age.getText().toString();
+                recup4 = mail.getText().toString();
+                recup5 = password.getText().toString();
+
+                if (recup1.equals("") || recup2.equals("") || recup3.matches("") || recup4.matches("")
+                        || recup5.matches(""))
+                {
+                    Toast.makeText(this, "Vous devez renseigner tous les champs !", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                else{
-                    Toast.makeText(SignActivity.this, "Problème lors de l'inscription", Toast.LENGTH_LONG).show();
+                else {
+                    boolean isInserted = db.insertNewUsers(name.getText().toString(), firstname.getText().toString(), age.getText().toString(),mail.getText().toString(), password.getText().toString());
+                    if(isInserted){
+                        Toast.makeText(SignActivity.this, "Votre compte a été crée avec succès !", Toast.LENGTH_LONG).show();
+                        Cursor data = db.getAllUsers();
+                        data.moveToLast();
+                        String register = data.getString(1);
+                        Intent sub = new Intent(this, MainActivity.class);
+                        sub.putExtra("register", register);
+                        startActivity(sub);
+                    }
+                    else{
+                        Toast.makeText(SignActivity.this, "Problème lors de l'inscription", Toast.LENGTH_LONG).show();
+                    }
                 }
+                
             }catch(NullPointerException e)
             {
 

@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int tabMonth[] = new int[12];
     int tabAvril[] = {2,3,4,1,5,3,0,0,4,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-    private static final String FILE_NAME_ONE = "test.txt";
+    private static final String FILE_NAME_ONE = "deco.txt";
     private static final String FILE_NAME_TWO = "off.txt";
 
     private final CountFragment count = new CountFragment();;
