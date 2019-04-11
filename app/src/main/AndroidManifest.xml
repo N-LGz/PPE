@@ -26,16 +26,6 @@
         </activity>
 
         <activity
-                android:name=".NotificationsActivity"
-                android:label="Notifications"
-                android:launchMode="singleInstance"
-                android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:parentActivityName="com.nemge.ppe.MainActivity"
-                    android:value=".MainActivity"/>
-        </activity>
-        <activity
                 android:name=".TutorialActivity"
                 android:label="Tutoriel"
                 android:launchMode="singleInstance"

@@ -514,10 +514,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intentTutorial = new Intent(this, TutorialActivity.class);
                 startActivity(intentTutorial);
                 break;
-            case R.id.nav_notifications:
-                Intent intentNotifications = new Intent(this, NotificationsActivity.class);
-                startActivity(intentNotifications);
-                break;
             case R.id.nav_bluetooth:
                 Intent intentBT = new Intent(this, BluetoothDevicesActivity.class);
                 startActivity(intentBT);
